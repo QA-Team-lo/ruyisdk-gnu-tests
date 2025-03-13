@@ -1,4 +1,4 @@
-# SpacemiT K1/M1 (X60) GNU Toolchain (upstream) Test Report
+# SpacemiT K1/M1 (X60) GNU Toolchain (gnu-upstream) Test Report
 
 ## Environment
 
