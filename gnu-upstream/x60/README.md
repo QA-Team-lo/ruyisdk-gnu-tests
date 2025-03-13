@@ -8,7 +8,7 @@
 
 ### Hardware Information
 - Banana Pi BPI-F3 board
-- SpacemiT K1/M1 SoC (RISC-V X60 core)
+- SpacemiT K1/M1 SoC (RISC-V SpacemiT X60 core)
 
 ## Installation
 
