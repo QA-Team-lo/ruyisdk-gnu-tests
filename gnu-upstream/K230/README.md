@@ -7,8 +7,8 @@
 - Testing date: March 14, 2025
 
 ### Hardware Information
-- Banana Pi BPI-F3 board
-- SpacemiT K1/M1 SoC (RISC-V SpacemiT X60 core)
+- CanMV K230 board
+- Canaan Kendryte K230 SoC (XuanTie C908 Core)
 
 ## Installation
 
