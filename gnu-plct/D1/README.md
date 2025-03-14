@@ -1,4 +1,4 @@
-# SpacemiT K1/M1 (X60) GNU Toolchain (gnu-plct) Test Report
+# Allwinner D1 GNU Toolchain (gnu-plct) Test Report
 
 ## Environment
 
