@@ -331,7 +331,7 @@ These results demonstrate good performance of the Sophgo SG2000 SoC when running
 
 ## Test Summary
 
-The following table summarizes the test results for GNU Toolchain on SpacemiT K1/M1 (X60):
+The following table summarizes the test results for GNU Toolchain on Sophgo SG2000 SoC:
 
 | Test Case                  | Expected Result                              | Actual Result                                                             | Status  |
 |----------------------------|----------------------------------------------|---------------------------------------------------------------------------|---------|
