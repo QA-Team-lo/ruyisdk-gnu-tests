@@ -142,7 +142,7 @@ Hello, world!
 
 The program executed successfully and output "Hello, world!", confirming basic functionality of the toolchain and proper integration with the system libraries.
 
-### 3. CoreMark Benchmark
+### 3. CoreMark Benchmark (-O2 -lrt)
 
 **Commands and Results:**
 
@@ -225,22 +225,54 @@ Correct operation validated. See readme.txt for run and reporting rules.
 CoreMark 1.0 : 5692.108668 / GCC13.2.0 -O2   -lrt / Heap
 ```
 
-**CoreMark Results:**
+### 4. CoreMark Benchmark (-O2 -march=rv64gcv_zvl256b -mabi=lp64d  -lrt)
 
-CoreMark is a benchmark used to evaluate embedded processor performance. A higher score indicates better processor performance. The results are summarized in the table below:
+**Commands and Results:**
 
-| Metric | Value | Description |
-|--------|-------|-------------|
-| **Iterations/Sec** | 5692.108668 | Number of iterations completed per second (higher is better) |
-| **Total ticks** | 19325 | Total number of clock cycles |
-| **Total time (secs)** | 19.325 | Total execution time in seconds |
-| **Iterations** | 110000 | Total number of iterations performed |
-| **Compiler version** | GCC13.2.0 | Compiler used for the test |
-| **Compiler flags** | -O2 -lrt | Compilation flags used |
-| **Memory location** | Heap | Where data is stored during execution |
+1. Modify the build configuration to use the RISC-V compiler with specific flags:
+```bash
+«Ruyi venv-gnu-upstream» root@k1:~/coremark# make PORT_DIR=linux64 XCFLAGS="-march=rv64gcv_zvl256b -mabi=lp64d" link
+riscv64-unknown-linux-gnu-gcc -O2 -Ilinux64 -I. -DFLAGS_STR=\""-O2 -march=rv64gcv_zvl256b -mabi=lp64d  -lrt"\" -DITERATIONS=0 -march=rv64gcv_zvl256b -mabi=lp64d core_list_join.c core_main.c core_matrix.c core_state.c core_util.c linux64/core_portme.c -o ./coremark.exe -lrt
+Link performed along with compile
+```
 
-These results demonstrate good performance of the SpacemiT K1/M1 (X60) SoC when running CoreMark compiled with the RuyiSDK toolchain.
+2. Run CoreMark:
+```bash
+«Ruyi venv-gnu-upstream» root@k1:~/coremark# ./coremark.exe 
+2K performance run parameters for coremark.
+CoreMark Size    : 666
+Total ticks      : 19396
+Total time (secs): 19.396000
+Iterations/Sec   : 5671.272427
+Iterations       : 110000
+Compiler version : GCC13.2.0
+Compiler flags   : -O2 -march=rv64gcv_zvl256b -mabi=lp64d  -lrt
+Memory location  : Please put data memory location here
+            (e.g. code in flash, data on heap etc)
+seedcrc          : 0xe9f5
+[0]crclist       : 0xe714
+[0]crcmatrix     : 0x1fd7
+[0]crcstate      : 0x8e3a
+[0]crcfinal      : 0x33ff
+Correct operation validated. See readme.txt for run and reporting rules.
+CoreMark 1.0 : 5671.272427 / GCC13.2.0 -O2 -march=rv64gcv_zvl256b -mabi=lp64d  -lrt / Heap
+```
 
+**CoreMark Results Comparison:**
+
+CoreMark is a benchmark used to evaluate embedded processor performance. A higher score indicates better processor performance. The results from two different compiler configurations are summarized in the table below:
+
+| Metric | Default Flags | Vector Extension Flags | Description |
+|--------|--------------|------------------------|-------------|
+| **Iterations/Sec** | 5692.108668 | 5671.272427 | Number of iterations completed per second (higher is better) |
+| **Total ticks** | 19325 | 19396 | Total number of clock cycles |
+| **Total time (secs)** | 19.325 | 19.396 | Total execution time in seconds |
+| **Iterations** | 110000 | 110000 | Total number of iterations performed |
+| **Compiler version** | GCC13.2.0 | GCC13.2.0 | Compiler used for the test |
+| **Compiler flags** | -O2 -lrt | -O2 -march=rv64gcv_zvl256b -mabi=lp64d -lrt | Compilation flags used |
+| **Memory location** | Heap | Heap | Where data is stored during execution |
+
+These results demonstrate good performance of the SpacemiT K1/M1 (X60) SoC when running CoreMark compiled with the RuyiSDK toolchain, with slightly better performance using the default optimization flags compared to the vector extension flags in this particular test case.
 ## Test Summary
 
 The following table summarizes the test results for GNU Upstream Toolchain on SpacemiT K1/M1 (X60):
@@ -250,9 +282,10 @@ The following table summarizes the test results for GNU Upstream Toolchain on Sp
 | **Toolchain Installation** | Successfully installed toolchain | Installed to `/root/.local/share/ruyi/binaries/riscv64/gnu-upstream-0.20231212.0` | ✅ PASS |
 | **Compiler Verification** | GCC 13.2.0 for RISC-V architecture | GCC 13.2.0 with rv64gc architecture, lp64d ABI | ✅ PASS |
 | **Hello World Test** | Successful compilation and execution | Successfully compiled and executed | ✅ PASS |
-| **CoreMark Benchmark** | Successfully compile and run benchmark | Successfully compiled and completed benchmark with score of 5692.108668 | ✅ PASS |
+| **CoreMark Benchmark (Default)** | Successfully compile and run benchmark | Successfully compiled and completed benchmark with score of 5692.108668 | ✅ PASS |
+| **CoreMark Benchmark (Vector Extension)** | Successfully compile and run benchmark with vector flags | Successfully compiled and completed benchmark with score of 5671.272427 | ✅ PASS |
 
-All tests passed successfully, confirming that the GNU Upstream Toolchain works correctly on the SpacemiT K1/M1 (X60) SoC.
+All tests passed successfully, confirming that the GNU Upstream Toolchain works correctly on the SpacemiT K1/M1 (X60) SoC. It's worth noting that enabling the vector extension (`-march=rv64gcv_zvl256b`) did not improve performance in the CoreMark benchmark; in fact, it resulted in a slightly lower score. This suggests that either the CoreMark benchmark code doesn't benefit from vectorization, or the compiler's auto-vectorization capabilities for this specific workload need improvement.
 
 ## Logs & Recording
 
