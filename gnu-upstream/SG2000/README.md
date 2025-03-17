@@ -163,6 +163,15 @@ The program executed successfully and output "Hello World", confirming basic fun
 
 1. Extract the CoreMark package with Ruyi:
 
+**Command:**
+
+```bash
+mkdir coremark && cd coremark
+ruyi extract coremark
+```
+
+**Result:**
+
 ```bash
 «Ruyi venv-gnu-upstream» debian@duos:~$ mkdir coremark && cd coremark
 «Ruyi venv-gnu-upstream» debian@duos:~/coremark$ ruyi extract coremark
@@ -180,20 +189,38 @@ Makefile    barebones  core_main.c       core_state.c   coremark.h   docs    lin
 
 2. Modify the build configuration to use the RISC-V compiler:
 
+**Command:**
+```bash
+sed -i 's/\bgcc\b/riscv64-unknown-linux-gnu-gcc/g' linux64/core_portme.mak
+```
+
+**Result:**
 ```bash
 «Ruyi venv-gnu-upstream» debian@duos:~/coremark$ cat linux64/core_portme.mak | grep gcc
 CC = gcc
 LD              = gcc
 # E.g. generate profile guidance files. Sample PGO generation for gcc enabled with PGO=1
+  PGO_STAGE=build_pgo_gcc
+.PHONY: build_pgo_gcc
+build_pgo_gcc:
 «Ruyi venv-gnu-upstream» debian@duos:~/coremark$ sed -i 's/\bgcc\b/riscv64-unknown-linux-gnu-gcc/g' linux64/core_portme.mak
 «Ruyi venv-gnu-upstream» debian@duos:~/coremark$ cat linux64/core_portme.mak | grep gcc
 CC = riscv64-unknown-linux-gnu-gcc
 LD              = riscv64-unknown-linux-gnu-gcc
 # E.g. generate profile guidance files. Sample PGO generation for riscv64-unknown-linux-gnu-gcc enabled with PGO=1
+  PGO_STAGE=build_pgo_gcc
+.PHONY: build_pgo_gcc
+build_pgo_gcc:
 ```
 
 3. Build CoreMark:
 
+**Command:**
+```bash
+make PORT_DIR=linux64 link
+```
+
+**Result:**
 ```bash
 «Ruyi venv-gnu-upstream» debian@duos:~/coremark$ make PORT_DIR=linux64 link
 riscv64-unknown-linux-gnu-gcc -O2 -Ilinux64 -I. -DFLAGS_STR=\""-O2   -lrt"\" -DITERATIONS=0  core_list_join.c core_main.c core_matrix.c core_state.c core_util.c linux64/core_portme.c -o ./coremark.exe -lrt
@@ -202,6 +229,12 @@ Link performed along with compile
 
 4. Verify the resulting binary is a RISC-V executable:
 
+**Command:**
+```bash
+file coremark.exe
+```
+
+**Result:**
 ```bash
 «Ruyi venv-gnu-upstream» debian@duos:~/coremark$ file coremark.exe
 coremark.exe: ELF 64-bit LSB executable, UCB RISC-V, RVC, double-float ABI, version 1 (SYSV), dynamically linked, interpreter /lib/ld-linux-riscv64-lp64d.so.1, BuildID[sha1]=42284b8365034fa7c6428be87b1cd8ac4ea64697, for GNU/Linux 4.15.0, with debug_info, not stripped
@@ -215,7 +248,14 @@ coremark.exe: ELF 64-bit LSB executable, UCB RISC-V, RVC, double-float ABI, vers
 
 **Commands and Results:**
 
-- Install toolchain
+1. Install toolchain
+
+**Command:**
+```bash
+ruyi install toolchain/gnu-upstream
+```
+
+**Result:**
 ```bash
 [test@arch ruyisdk]$ ruyi install toolchain/gnu-upstream
 warn: this ruyi installation has telemetry mode set to on, and will upload non-tracking usage information to RuyiSDK-managed servers every Wednesday
@@ -230,7 +270,14 @@ info: downloading https://mirror.iscas.ac.cn/ruyisdk/dist/RuyiSDK-20231212-Upstr
 info: extracting RuyiSDK-20231212-Upstream-Sources-riscv64-unknown-linux-gnu.tar.xz for package gnu-upstream-0.20231212.0
 info: package gnu-upstream-0.20231212.0 installed to /home/test/.local/share/ruyi/binaries/x86_64/gnu-upstream-0.20231212.0
 ```
-- Create virtual environment
+2. Create virtual environment
+
+**Command:**
+```bash
+ruyi venv -t toolchain/gnu-upstream generic venv-gnu-upstream
+```
+
+**Result:**
 ```bash
 [test@arch ruyisdk]$ ruyi venv -t toolchain/gnu-upstream generic venv-gnu-upstream
 warn: this ruyi installation has telemetry mode set to on, and will upload non-tracking usage information to RuyiSDK-managed servers every Wednesday
@@ -254,7 +301,14 @@ and Meson cross file. Check the virtual environment root for those;
 comments in the files contain usage instructions.
 ```
 
-- Activate environment
+3. Activate environment
+
+**Command:**
+```bash
+. ./venv-gnu-upstream/bin/ruyi-activate
+```
+
+**Result:**
 ```bash
 [test@arch ruyisdk]$ . ./venv-gnu-upstream/bin/ruyi-activate
 «Ruyi venv-gnu-upstream» [test@arch ruyisdk]$ riscv64-unknown-linux-gnu-gcc -v
@@ -268,7 +322,16 @@ Supported LTO compression algorithms: zlib zstd
 gcc version 13.2.0 (RuyiSDK 20231212 Upstream-Sources)
 ```
 
-- Extract and build CoreMark with Ruyi
+4. Extract and build CoreMark with Ruyi
+
+**Command:**
+```bash
+ruyi extract coremark
+sed -i 's/\bgcc\b/riscv64-unknown-linux-gnu-gcc/g' linux64/core_portme.mak
+make PORT_DIR=linux64 link
+```
+
+**Result:**
 ```bash
 «Ruyi venv-gnu-upstream» [test@arch ruyisdk]$ mkdir coremark && cd coremark
 «Ruyi venv-gnu-upstream» [test@arch coremark]$ ruyi extract coremark
@@ -285,6 +348,23 @@ riscv64-unknown-linux-gnu-gcc -O2 -Ilinux64 -I. -DFLAGS_STR=\""-O2   -lrt"\" -DI
 Link performed along with compile
 «Ruyi venv-gnu-upstream» [test@arch coremark]$ file coremark.exe
 coremark.exe: ELF 64-bit LSB executable, UCB RISC-V, RVC, double-float ABI, version 1 (SYSV), dynamically linked, interpreter /lib/ld-linux-riscv64-lp64d.so.1, BuildID[sha1]=42284b8365034fa7c6428be87b1cd8ac4ea64697, for GNU/Linux 4.15.0, with debug_info, not stripped
+```
+
+5. Send file to DuoS
+
+**Command:**
+```bash
+scp coremark.exe debian@10.42.0.1:
+```
+
+**Result:**
+```bash
+[test@arch coremark]$ scp coremark.exe debian@10.42.0.1:
+debian@10.42.0.1's password:
+coremark.exe                                                                                                     100%   27KB   4.3MB/s   00:00
+
+«Ruyi venv-gnu-plct» debian@duos:~$ ls | grep coremark.exe
+coremark.exe
 ```
 
 #### CoreMark score

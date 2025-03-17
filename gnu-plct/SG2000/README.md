@@ -162,6 +162,13 @@ The program executed successfully and output "Hello World", confirming basic fun
 
 1. Extract the CoreMark package with Ruyi:
 
+**Command:**
+```bash
+mkdir coremark && cd coremark
+ruyi extract coremark
+```
+
+**Result:**
 ```bash
 «Ruyi venv-gnu-plct» debian@duos:~$ mkdir coremark && cd coremark
 «Ruyi venv-gnu-plct» debian@duos:~/coremark$ ruyi extract coremark
@@ -179,20 +186,38 @@ Makefile    barebones  core_main.c       core_state.c   coremark.h   docs    lin
 
 2. Modify the build configuration to use the RISC-V compiler:
 
+**Command:**
+```bash
+sed -i 's/\bgcc\b/riscv64-plct-linux-gnu-gcc/g' linux64/core_portme.mak
+```
+
+**Result:**
 ```bash
 «Ruyi venv-gnu-plct» debian@duos:~/coremark$ cat linux64/core_portme.mak | grep gcc
 CC = gcc
 LD              = gcc
 # E.g. generate profile guidance files. Sample PGO generation for gcc enabled with PGO=1
+  PGO_STAGE=build_pgo_gcc
+.PHONY: build_pgo_gcc
+build_pgo_gcc:
 «Ruyi venv-gnu-plct» debian@duos:~/coremark$ sed -i 's/\bgcc\b/riscv64-plct-linux-gnu-gcc/g' linux64/core_portme.mak
 «Ruyi venv-gnu-plct» debian@duos:~/coremark$ cat linux64/core_portme.mak | grep gcc
 CC = riscv64-plct-linux-gnu-gcc
 LD              = riscv64-plct-linux-gnu-gcc
 # E.g. generate profile guidance files. Sample PGO generation for riscv64-plct-linux-gnu-gcc enabled with PGO=1
+  PGO_STAGE=build_pgo_gcc
+.PHONY: build_pgo_gcc
+build_pgo_gcc:
 ```
 
 3. Build CoreMark:
 
+**Command:**
+```bash
+make PORT_DIR=linux64 link
+```
+
+**Result:**
 ```bash
 «Ruyi venv-gnu-plct» debian@duos:~/coremark$ make PORT_DIR=linux64 link
 riscv64-plct-linux-gnu-gcc -O2 -Ilinux64 -I. -DFLAGS_STR=\""-O2   -lrt"\" -DITERATIONS=0  core_list_join.c core_main.c core_matrix.c core_state.c core_util.c linux64/core_portme.c -o ./coremark.exe -lrt
@@ -201,6 +226,12 @@ Link performed along with compile
 
 4. Verify the resulting binary is a RISC-V executable:
 
+**Command:**
+```bash
+file coremark.exe
+```
+
+**Result:**
 ```bash
 «Ruyi venv-gnu-plct» debian@duos:~/coremark$ file coremark.exe
 coremark.exe: ELF 64-bit LSB executable, UCB RISC-V, RVC, double-float ABI, version 1 (SYSV), dynamically linked, interpreter /lib/ld-linux-riscv64-lp64d.so.1, BuildID[sha1]=2ec45ce18cb640e991e7f27da56169eaa1652368, for GNU/Linux 4.15.0, with debug_info, not stripped
@@ -214,7 +245,14 @@ coremark.exe: ELF 64-bit LSB executable, UCB RISC-V, RVC, double-float ABI, vers
 
 **Commands and Results:**
 
-- Install toolchain
+1. Install toolchain
+
+**Command:**
+```bash
+ruyi install toolchain/gnu-plct
+```
+
+**Result:**
 ```bash
 [test@arch ruyisdk]$ ruyi install toolchain/gnu-plct
 warn: this ruyi installation has telemetry mode set to on, and will upload non-tracking usage information to RuyiSDK-managed servers every Wednesday
@@ -229,7 +267,15 @@ info: downloading https://mirror.iscas.ac.cn/ruyisdk/dist/RuyiSDK-20240324-PLCT-
 info: extracting RuyiSDK-20240324-PLCT-Sources-riscv64-plct-linux-gnu.tar.xz for package gnu-plct-0.20240324.0
 info: package gnu-plct-0.20240324.0 installed to /home/test/.local/share/ruyi/binaries/x86_64/gnu-plct-0.20240324.0
 ```
-- Create virtual environment
+
+2. Create virtual environment
+
+**Command:**
+```bash
+ruyi venv -t toolchain/gnu-plct generic venv-gnu-plct
+```
+
+**Result:**
 ```bash
 [test@arch ruyisdk]$ ruyi venv -t toolchain/gnu-plct generic venv-gnu-plct
 warn: this ruyi installation has telemetry mode set to on, and will upload non-tracking usage information to RuyiSDK-managed servers every Wednesday
@@ -253,9 +299,16 @@ and Meson cross file. Check the virtual environment root for those;
 comments in the files contain usage instructions.
 ```
 
-- Activate environment
+3. Activate environment
+
+**Command:**
 ```bash
-[test@arch ruyisdk]$ ./venv-gnu-plct/bin/ruyi-activate
+. ./venv-gnu-plct/bin/ruyi-activate
+```
+
+**Result:**
+```bash
+[test@arch ruyisdk]$ . ./venv-gnu-plct/bin/ruyi-activate
 «Ruyi venv-gnu-plct» [test@arch ruyisdk]$ riscv64-plct-linux-gnu-gcc -v
 Using built-in specs.
 COLLECT_GCC=/home/test/.local/share/ruyi/binaries/x86_64/gnu-plct-0.20240324.0/bin/riscv64-plct-linux-gnu-gcc
@@ -267,7 +320,16 @@ Supported LTO compression algorithms: zlib zstd
 gcc version 13.1.0 (RuyiSDK 20240324 PLCT-Sources)
 ```
 
-- Extract and build CoreMark with Ruyi
+4. Extract and build CoreMark with Ruyi
+
+**Command:**
+```bash
+ruyi extract coremark
+sed -i 's/\bgcc\b/riscv64-plct-linux-gnu-gcc/g' linux64/core_portme.mak
+make PORT_DIR=linux64 link
+```
+
+**Result:**
 ```bash
 «Ruyi venv-gnu-plct» [test@arch ruyisdk]$ mkdir coremark && cd coremark
 «Ruyi venv-gnu-plct» [test@arch coremark]$ ruyi extract coremark
@@ -288,6 +350,23 @@ riscv64-plct-linux-gnu-gcc -O2 -Ilinux64 -I. -DFLAGS_STR=\""-O2   -lrt"\" -DITER
 Link performed along with compile
 «Ruyi venv-gnu-plct» [test@arch coremark]$ file coremark.exe
 coremark.exe: ELF 64-bit LSB executable, UCB RISC-V, RVC, double-float ABI, version 1 (SYSV), dynamically linked, interpreter /lib/ld-linux-riscv64-lp64d.so.1, BuildID[sha1]=310ecde40710e1cccfffdf1f541cb610aa593b26, for GNU/Linux 4.15.0, with debug_info, not stripped
+```
+
+5. Send file to DuoS
+
+**Command:**
+```bash
+scp coremark.exe debian@10.42.0.1:
+```
+
+**Result:**
+```bash
+[test@arch coremark]$ scp coremark.exe debian@10.42.0.1:
+debian@10.42.0.1's password:
+coremark.exe                                                                                                     100%   27KB   4.3MB/s   00:00
+
+«Ruyi venv-gnu-plct» debian@duos:~$ ls | grep coremark.exe
+coremark.exe
 ```
 
 #### CoreMark score
