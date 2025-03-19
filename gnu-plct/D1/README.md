@@ -271,7 +271,7 @@ The following table summarizes the test results for GNU Toolchain on SpacemiT K1
 | **Toolchain Installation** | Successfully installed toolchain       | Installed to `/root/.local/share/ruyi/binaries/riscv64/gnu-plct-0.20240324.0` | ✅ PASS |
 | **Compiler Verification**  | GCC 13.1.0 for RISC-V architecture     | GCC 13.1.0 with rv64gc architecture, lp64d ABI                                | ✅ PASS |
 | **Hello World Test**       | Successful compilation and execution   | Successfully compiled and executed                                            | ✅ PASS |
-| **CoreMark Benchmark**     | Successfully compile and run benchmark | Successfully compiled and completed benchmark with score of 5680.351149       | ✅ PASS |
+| **CoreMark Benchmark**     | Successfully compile and run benchmark | Successfully compiled and completed benchmark with score of 2371.354043       | ✅ PASS |
 
 All tests passed successfully, confirming that the GNU Toolchain works correctly on the SpacemiT K1/M1 (X60) SoC.
 
