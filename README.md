@@ -27,6 +27,6 @@ TBD
 - TH1520 (c910): @wychlw
 - JH7110 (U74): @saicogn
 - K230 (c908): @aisuneko
-- SG2042 (c920v2): 待分配
-- CV1800B (c906fdv): 待分配
+- SG2042 (c920v2): @wychlw
+- CV1800B (c906fdv): SongYuSheng1216
 - SG2000 (c906fdv): @zeyi2
