@@ -16,7 +16,7 @@
 
 ## License
 
-TBD
+此项目使用 [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/) 授权。
 
 ## Credits
 
