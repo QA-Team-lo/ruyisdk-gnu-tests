@@ -4,7 +4,7 @@
 
 ### System Information
 - RuyiSDK on MilkV DuoS with Sophgo SG2000 SoC
-- Testing date: March 15, 2025
+- Testing date: April 15, 2025
 
 ### Hardware Information
 - MilkV DuoS
@@ -22,15 +22,25 @@ ruyi install toolchain/gnu-plct
 **Result:**
 ```bash
 debian@duos:~$ ruyi install toolchain/gnu-plct
-warn: this ruyi installation has telemetry mode set to on, and will upload non-tracking usage information to RuyiSDK-managed servers every Saturday
-info: usage information has already been uploaded today at 2025-03-15 02:10:49 +0000
+warn: this ruyi installation has telemetry mode set to on, and will upload non-tracking usage information to RuyiSDK-managed servers every Wednesday
+info: the next upload will happen anytime ruyi is executed between 2025-04-16 00:00:00 +0000 and 2025-04-17 00:00:00 +0000
 info: in order to hide this banner:
 info: - opt out with ruyi telemetry optout
 info: - or give consent with ruyi telemetry consent
-info: downloading https://mirror.iscas.ac.cn/ruyisdk/dist/RuyiSDK-20240324-PLCT-Sources-HOST-riscv64-linux-gnu-riscv64-plct-linux-gnu.tar.xz to /home/debian/.cache/ruyi/distfiles/RuyiSDK-20240324-PLCT-Sources-HOST-riscv64-linux-gnu-riscv64-plct-linux-gnu.tar.xz
-  ---------------------------------------- 242.6/242.6 MB 2.4 MB/s 01:41
-info: extracting RuyiSDK-20240324-PLCT-Sources-HOST-riscv64-linux-gnu-riscv64-plct-linux-gnu.tar.xz for package gnu-plct-0.20240324.0
-info: package gnu-plct-0.20240324.0 installed to /home/debian/.local/share/ruyi/binaries/riscv64/gnu-plct-0.20240324.0
+info: downloading https://mirror.iscas.ac.cn/ruyisdk/dist/RuyiSDK-20250401-PLCT-Sources-HOST-riscv64-linux-gnu-riscv64-plct-linux-gnu.tar.xz to /home/debian/.cache/ruyi/distfiles/RuyiSDK-20250401-PLCT-Sources-HOST-riscv64-linux-gnu-riscv64-plct-linux-gnu.tar.xz
+--2025-04-15 03:26:27--  https://mirror.iscas.ac.cn/ruyisdk/dist/RuyiSDK-20250401-PLCT-Sources-HOST-riscv64-linux-gnu-riscv64-plct-linux-gnu.tar.xz
+Resolving mirror.iscas.ac.cn (mirror.iscas.ac.cn)... 124.16.138.126
+Connecting to mirror.iscas.ac.cn (mirror.iscas.ac.cn)|124.16.138.126|:443... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 161794864 (154M) [application/octet-stream]
+Saving to: '/home/debian/.cache/ruyi/distfiles/RuyiSDK-20250401-PLCT-Sources-HOST-riscv64-linux-gnu-riscv64-plct-linux-gnu.tar.xz'
+
+/home/debian/.cache/ruyi/distfiles/RuyiSDK-20250401- 100%[====================================================================================================================>] 154.30M  3.39MB/s    in 50s
+
+2025-04-15 03:27:17 (3.11 MB/s) - '/home/debian/.cache/ruyi/distfiles/RuyiSDK-20250401-PLCT-Sources-HOST-riscv64-linux-gnu-riscv64-plct-linux-gnu.tar.xz' saved [161794864/161794864]
+
+info: extracting RuyiSDK-20250401-PLCT-Sources-HOST-riscv64-linux-gnu-riscv64-plct-linux-gnu.tar.xz for package gnu-plct-0.20250401.0
+info: package gnu-plct-0.20250401.0 installed to /home/debian/.local/share/ruyi/binaries/riscv64/gnu-plct-0.20250401.0
 ```
 
 ### 2. Create Virtual Environment
@@ -42,12 +52,12 @@ ruyi venv -t toolchain/gnu-plct generic venv-gnu-plct
 
 **Result:**
 ```bash
-warn: this ruyi installation has telemetry mode set to on, and will upload non-tracking usage information to RuyiSDK-managed servers every Saturday
-info: usage information has already been uploaded today at 2025-03-15 02:10:49 +0000
+debian@duos:~$ ruyi venv -t toolchain/gnu-plct generic venv-gnu-plct
+warn: this ruyi installation has telemetry mode set to on, and will upload non-tracking usage information to RuyiSDK-managed servers every Wednesday
+info: the next upload will happen anytime ruyi is executed between 2025-04-16 00:00:00 +0000 and 2025-04-17 00:00:00 +0000
 info: in order to hide this banner:
 info: - opt out with ruyi telemetry optout
 info: - or give consent with ruyi telemetry consent
-info: Creating a Ruyi virtual environment at venv-gnu-plct...
 info: The virtual environment is now created.
 
 You may activate it by sourcing the appropriate activation script in the
@@ -65,30 +75,15 @@ comments in the files contain usage instructions.
 
 **Verification of created environment contents:**
 ```bash
+ebian@duos:~$ ls ~/venv-gnu-plct/bin/
+riscv64-plct-linux-gnu-addr2line  riscv64-plct-linux-gnu-cpp      riscv64-plct-linux-gnu-gcc-ranlib     riscv64-plct-linux-gnu-gfortran  riscv64-plct-linux-gnu-nm       riscv64-plct-linux-gnu-strings
+riscv64-plct-linux-gnu-ar         riscv64-plct-linux-gnu-elfedit  riscv64-plct-linux-gnu-gcov           riscv64-plct-linux-gnu-gprof     riscv64-plct-linux-gnu-objcopy  riscv64-plct-linux-gnu-strip
+riscv64-plct-linux-gnu-as         riscv64-plct-linux-gnu-g++      riscv64-plct-linux-gnu-gcov-dump      riscv64-plct-linux-gnu-ld        riscv64-plct-linux-gnu-objdump  ruyi-activate
+riscv64-plct-linux-gnu-c++        riscv64-plct-linux-gnu-gcc      riscv64-plct-linux-gnu-gcov-tool      riscv64-plct-linux-gnu-ld.bfd    riscv64-plct-linux-gnu-ranlib
+riscv64-plct-linux-gnu-c++filt    riscv64-plct-linux-gnu-gcc-ar   riscv64-plct-linux-gnu-gdb            riscv64-plct-linux-gnu-ldd       riscv64-plct-linux-gnu-readelf
+riscv64-plct-linux-gnu-cc         riscv64-plct-linux-gnu-gcc-nm   riscv64-plct-linux-gnu-gdb-add-index  riscv64-plct-linux-gnu-lto-dump  riscv64-plct-linux-gnu-size
 debian@duos:~$ ls ~/venv-gnu-plct/
-bin                                     sysroot
-meson-cross.ini                         sysroot.riscv64-plct-linux-gnu
-meson-cross.riscv64-plct-linux-gnu.ini  toolchain.cmake
-ruyi-cache.v2.toml                      toolchain.riscv64-plct-linux-gnu.cmake
-ruyi-venv.toml
-debian@duos:~$ ls ~/venv-gnu-plct/bin
-riscv64-plct-linux-gnu-addr2line   riscv64-plct-linux-gnu-gdb-add-index
-riscv64-plct-linux-gnu-ar          riscv64-plct-linux-gnu-gfortran
-riscv64-plct-linux-gnu-as          riscv64-plct-linux-gnu-gprof
-riscv64-plct-linux-gnu-c++         riscv64-plct-linux-gnu-ld
-riscv64-plct-linux-gnu-c++filt     riscv64-plct-linux-gnu-ld.bfd
-riscv64-plct-linux-gnu-cc          riscv64-plct-linux-gnu-ldd
-riscv64-plct-linux-gnu-cpp         riscv64-plct-linux-gnu-lto-dump
-riscv64-plct-linux-gnu-elfedit     riscv64-plct-linux-gnu-nm
-riscv64-plct-linux-gnu-g++         riscv64-plct-linux-gnu-objcopy
-riscv64-plct-linux-gnu-gcc         riscv64-plct-linux-gnu-objdump
-riscv64-plct-linux-gnu-gcc-ar      riscv64-plct-linux-gnu-ranlib
-riscv64-plct-linux-gnu-gcc-nm      riscv64-plct-linux-gnu-readelf
-riscv64-plct-linux-gnu-gcc-ranlib  riscv64-plct-linux-gnu-size
-riscv64-plct-linux-gnu-gcov        riscv64-plct-linux-gnu-strings
-riscv64-plct-linux-gnu-gcov-dump   riscv64-plct-linux-gnu-strip
-riscv64-plct-linux-gnu-gcov-tool   ruyi-activate
-riscv64-plct-linux-gnu-gdb
+bin  meson-cross.ini  meson-cross.riscv64-plct-linux-gnu.ini  ruyi-cache.v2.toml  ruyi-venv.toml  sysroot  sysroot.riscv64-plct-linux-gnu  toolchain.cmake  toolchain.riscv64-plct-linux-gnu.cmake
 ```
 
 This step created a virtual environment at `~/venv-gnu-plct/` with all necessary configuration files, including Meson cross-compilation files, CMake toolchain files, a ready-to-use sysroot, and binary tools with the prefix `riscv64-plct-linux-gnu-`.
@@ -121,17 +116,17 @@ riscv64-plct-linux-gnu-gcc -v
 ```bash
 «Ruyi venv-gnu-plct» debian@duos:~$ riscv64-plct-linux-gnu-gcc -v
 Using built-in specs.
-COLLECT_GCC=/home/debian/.local/share/ruyi/binaries/riscv64/gnu-plct-0.20240324.0/bin/riscv64-plct-linux-gnu-gcc
-COLLECT_LTO_WRAPPER=/home/debian/.local/share/ruyi/binaries/riscv64/gnu-plct-0.20240324.0/bin/../libexec/gcc/riscv64-plct-linux-gnu/13.1.0/lto-wrapper
+COLLECT_GCC=/home/debian/.local/share/ruyi/binaries/riscv64/gnu-plct-0.20250401.0/bin/riscv64-plct-linux-gnu-gcc
+COLLECT_LTO_WRAPPER=/home/debian/.local/share/ruyi/binaries/riscv64/gnu-plct-0.20250401.0/bin/../libexec/gcc/riscv64-plct-linux-gnu/14.1.0/lto-wrapper
 Target: riscv64-plct-linux-gnu
-Configured with: /work/HOST-riscv64-linux-gnu/riscv64-plct-linux-gnu/src/gcc/configure --build=x86_64-build_pc-linux-gnu --host=riscv64-host_unknown-linux-gnu --target=riscv64-plct-linux-gnu --prefix=/opt/ruyi/HOST-riscv64-linux-gnu/riscv64-plct-linux-gnu --exec_prefix=/opt/ruyi/HOST-riscv64-linux-gnu/riscv64-plct-linux-gnu --with-sysroot=/opt/ruyi/HOST-riscv64-linux-gnu/riscv64-plct-linux-gnu/riscv64-plct-linux-gnu/sysroot --enable-languages=c,c++,fortran,objc,obj-c++ --with-arch=rv64gc --with-abi=lp64d --with-pkgversion='RuyiSDK 20240324 PLCT-Sources' --with-bugurl=https://github.com/ruyisdk/ruyisdk/issues --enable-__cxa_atexit --disable-libmudflap --disable-libgomp --enable-libquadmath --enable-libquadmath-support --disable-libmpx --with-gmp=/work/HOST-riscv64-linux-gnu/riscv64-plct-linux-gnu/buildtools/complibs-host --with-mpfr=/work/HOST-riscv64-linux-gnu/riscv64-plct-linux-gnu/buildtools/complibs-host --with-mpc=/work/HOST-riscv64-linux-gnu/riscv64-plct-linux-gnu/buildtools/complibs-host --with-isl=/work/HOST-riscv64-linux-gnu/riscv64-plct-linux-gnu/buildtools/complibs-host --enable-lto --enable-threads=posix --enable-target-optspace --enable-linker-build-id --with-linker-hash-style=gnu --enable-plugin --disable-nls --enable-multiarch --with-local-prefix=/opt/ruyi/HOST-riscv64-linux-gnu/riscv64-plct-linux-gnu/riscv64-plct-linux-gnu/sysroot --enable-long-long
+Configured with: /work/HOST-riscv64-linux-gnu/riscv64-plct-linux-gnu/src/gcc/configure --build=x86_64-build_pc-linux-gnu --host=riscv64-host_unknown-linux-gnu --target=riscv64-plct-linux-gnu --prefix=/opt/ruyi/HOST-riscv64-linux-gnu/riscv64-plct-linux-gnu --exec_prefix=/opt/ruyi/HOST-riscv64-linux-gnu/riscv64-plct-linux-gnu --with-sysroot=/opt/ruyi/HOST-riscv64-linux-gnu/riscv64-plct-linux-gnu/riscv64-plct-linux-gnu/sysroot --enable-languages=c,c++,fortran,objc,obj-c++ --with-arch=rv64gc --with-abi=lp64d --with-pkgversion='RuyiSDK 20250401 PLCT-Sources' --with-bugurl=https://github.com/ruyisdk/ruyisdk/issues --enable-__cxa_atexit --disable-libmudflap --disable-libgomp --disable-libquadmath --disable-libquadmath-support --disable-libmpx --with-gmp=/work/HOST-riscv64-linux-gnu/riscv64-plct-linux-gnu/buildtools/complibs-host --with-mpfr=/work/HOST-riscv64-linux-gnu/riscv64-plct-linux-gnu/buildtools/complibs-host --with-mpc=/work/HOST-riscv64-linux-gnu/riscv64-plct-linux-gnu/buildtools/complibs-host --with-isl=/work/HOST-riscv64-linux-gnu/riscv64-plct-linux-gnu/buildtools/complibs-host --enable-lto --enable-threads=posix --enable-target-optspace --enable-linker-build-id --with-linker-hash-style=gnu --enable-plugin --disable-nls --disable-multilib --with-local-prefix=/opt/ruyi/HOST-riscv64-linux-gnu/riscv64-plct-linux-gnu/riscv64-plct-linux-gnu/sysroot --enable-long-long
 Thread model: posix
 Supported LTO compression algorithms: zlib zstd
-gcc version 13.1.0 (RuyiSDK 20240324 PLCT-Sources)
+gcc version 14.1.0 (RuyiSDK 20250401 PLCT-Sources)
 ```
 
 The output confirmed a successful installation showing:
-- GCC version: 13.1.0 (RuyiSDK 20240324 PLCT-Sources)
+- GCC version: 14.1.0 (RuyiSDK 20250401 PLCT-Sources)
 - Target architecture: riscv64-plct-linux-gnu
 - Thread model: posix
 - Configured with appropriate RISC-V specific options (rv64gc architecture, lp64d ABI)
@@ -145,9 +140,10 @@ The output confirmed a successful installation showing:
 
 int main()
 {
-    printf("Hello World\n");
+    printf("Hello World"\n);
     return 0;
 }
+
 «Ruyi venv-gnu-plct» debian@duos:~$ riscv64-plct-linux-gnu-gcc hello.c -o hello && ./hello
 Hello World
 ```
@@ -172,16 +168,27 @@ ruyi extract coremark
 ```bash
 «Ruyi venv-gnu-plct» debian@duos:~$ mkdir coremark && cd coremark
 «Ruyi venv-gnu-plct» debian@duos:~/coremark$ ruyi extract coremark
-warn: this ruyi installation has telemetry mode set to on, and will upload non-tracking usage information to RuyiSDK-managed servers every Saturday
-info: usage information has already been uploaded today at 2025-03-15 02:10:49 +0000
+warn: this ruyi installation has telemetry mode set to on, and will upload non-tracking usage information to RuyiSDK-managed servers every Wednesday
+info: the next upload will happen anytime ruyi is executed between 2025-04-16 00:00:00 +0000 and 2025-04-17 00:00:00 +0000
 info: in order to hide this banner:
 info: - opt out with ruyi telemetry optout
 info: - or give consent with ruyi telemetry consent
+info: downloading https://mirror.iscas.ac.cn/ruyisdk/dist/coremark-1.01.tar.gz to /home/debian/.cache/ruyi/distfiles/coremark-1.01.tar.gz
+--2025-04-15 03:42:54--  https://mirror.iscas.ac.cn/ruyisdk/dist/coremark-1.01.tar.gz
+Resolving mirror.iscas.ac.cn (mirror.iscas.ac.cn)... 124.16.138.126
+Connecting to mirror.iscas.ac.cn (mirror.iscas.ac.cn)|124.16.138.126|:443... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 401208 (392K) [application/octet-stream]
+Saving to: '/home/debian/.cache/ruyi/distfiles/coremark-1.01.tar.gz'
+
+/home/debian/.cache/ruyi/distfiles/coremark-1.01.tar 100%[====================================================================================================================>] 391.80K  1.44MB/s    in 0.3s
+
+2025-04-15 03:43:00 (1.44 MB/s) - '/home/debian/.cache/ruyi/distfiles/coremark-1.01.tar.gz' saved [401208/401208]
+
 info: extracting coremark-1.01.tar.gz for package coremark-1.0.1
 info: package coremark-1.0.1 extracted to current working directory
 «Ruyi venv-gnu-plct» debian@duos:~/coremark$ ls
-LICENSE.md  README.md  core_list_join.c  core_matrix.c  core_util.c  cygwin  linux    simple
-Makefile    barebones  core_main.c       core_state.c   coremark.h   docs    linux64
+LICENSE.md  Makefile  README.md  barebones  core_list_join.c  core_main.c  core_matrix.c  core_state.c  core_util.c  coremark.h  cygwin  docs  linux  linux64  simple
 ```
 
 2. Modify the build configuration to use the RISC-V compiler:
@@ -234,7 +241,7 @@ file coremark.exe
 **Result:**
 ```bash
 «Ruyi venv-gnu-plct» debian@duos:~/coremark$ file coremark.exe
-coremark.exe: ELF 64-bit LSB executable, UCB RISC-V, RVC, double-float ABI, version 1 (SYSV), dynamically linked, interpreter /lib/ld-linux-riscv64-lp64d.so.1, BuildID[sha1]=2ec45ce18cb640e991e7f27da56169eaa1652368, for GNU/Linux 4.15.0, with debug_info, not stripped
+coremark.exe: ELF 64-bit LSB executable, UCB RISC-V, RVC, double-float ABI, version 1 (SYSV), dynamically linked, interpreter /lib/ld-linux-riscv64-lp64d.so.1, BuildID[sha1]=db453fedfca2f8f9d2f6567a949c0147daf8218f, for GNU/Linux 4.15.0, with debug_info, not stripped
 ```
 
 #### Cross Compile
@@ -256,16 +263,16 @@ ruyi install toolchain/gnu-plct
 ```bash
 [test@arch ruyisdk]$ ruyi install toolchain/gnu-plct
 warn: this ruyi installation has telemetry mode set to on, and will upload non-tracking usage information to RuyiSDK-managed servers every Wednesday
-info: the next upload will happen anytime ruyi is executed between 2025-03-19 08:00:00 +0800 and 2025-03-20 08:00:00 +0800
+info: the next upload will happen anytime ruyi is executed between 2025-04-16 08:00:00 +0800 and 2025-04-17 08:00:00 +0800
 info: in order to hide this banner:
 info: - opt out with ruyi telemetry optout
 info: - or give consent with ruyi telemetry consent
-info: downloading https://mirror.iscas.ac.cn/ruyisdk/dist/RuyiSDK-20240324-PLCT-Sources-riscv64-plct-linux-gnu.tar.xz to /home/test/.cache/ruyi/distfiles/RuyiSDK-20240324-PLCT-Sources-riscv64-plct-linux-gnu.tar.xz
+info: downloading https://mirror.iscas.ac.cn/ruyisdk/dist/RuyiSDK-20250401-PLCT-Sources-riscv64-plct-linux-gnu.tar.xz to /home/test/.cache/ruyi/distfiles/RuyiSDK-20250401-PLCT-Sources-riscv64-plct-linux-gnu.tar.xz
   % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
                                  Dload  Upload   Total   Spent    Left  Speed
-100  238M  100  238M    0     0  14.7M      0  0:00:16  0:00:16 --:--:-- 16.7M
-info: extracting RuyiSDK-20240324-PLCT-Sources-riscv64-plct-linux-gnu.tar.xz for package gnu-plct-0.20240324.0
-info: package gnu-plct-0.20240324.0 installed to /home/test/.local/share/ruyi/binaries/x86_64/gnu-plct-0.20240324.0
+100  159M  100  159M    0     0  17.6M      0  0:00:09  0:00:09 --:--:-- 27.9M
+info: extracting RuyiSDK-20250401-PLCT-Sources-riscv64-plct-linux-gnu.tar.xz for package gnu-plct-0.20250401.0
+info: package gnu-plct-0.20250401.0 installed to /home/test/.local/share/ruyi/binaries/x86_64/gnu-plct-0.20250401.0
 ```
 
 2. Create virtual environment
@@ -279,7 +286,7 @@ ruyi venv -t toolchain/gnu-plct generic venv-gnu-plct
 ```bash
 [test@arch ruyisdk]$ ruyi venv -t toolchain/gnu-plct generic venv-gnu-plct
 warn: this ruyi installation has telemetry mode set to on, and will upload non-tracking usage information to RuyiSDK-managed servers every Wednesday
-info: the next upload will happen anytime ruyi is executed between 2025-03-19 08:00:00 +0800 and 2025-03-20 08:00:00 +0800
+info: the next upload will happen anytime ruyi is executed between 2025-04-16 08:00:00 +0800 and 2025-04-17 08:00:00 +0800
 info: in order to hide this banner:
 info: - opt out with ruyi telemetry optout
 info: - or give consent with ruyi telemetry consent
@@ -311,13 +318,13 @@ comments in the files contain usage instructions.
 [test@arch ruyisdk]$ . ./venv-gnu-plct/bin/ruyi-activate
 «Ruyi venv-gnu-plct» [test@arch ruyisdk]$ riscv64-plct-linux-gnu-gcc -v
 Using built-in specs.
-COLLECT_GCC=/home/test/.local/share/ruyi/binaries/x86_64/gnu-plct-0.20240324.0/bin/riscv64-plct-linux-gnu-gcc
-COLLECT_LTO_WRAPPER=/home/test/.local/share/ruyi/binaries/x86_64/gnu-plct-0.20240324.0/bin/../libexec/gcc/riscv64-plct-linux-gnu/13.1.0/lto-wrapper
+COLLECT_GCC=/home/test/.local/share/ruyi/binaries/x86_64/gnu-plct-0.20250401.0/bin/riscv64-plct-linux-gnu-gcc
+COLLECT_LTO_WRAPPER=/home/test/.local/share/ruyi/binaries/x86_64/gnu-plct-0.20250401.0/bin/../libexec/gcc/riscv64-plct-linux-gnu/14.1.0/lto-wrapper
 Target: riscv64-plct-linux-gnu
-Configured with: /work/riscv64-plct-linux-gnu/src/gcc/configure --build=x86_64-build_pc-linux-gnu --host=x86_64-build_pc-linux-gnu --target=riscv64-plct-linux-gnu --prefix=/opt/ruyi/riscv64-plct-linux-gnu --exec_prefix=/opt/ruyi/riscv64-plct-linux-gnu --with-sysroot=/opt/ruyi/riscv64-plct-linux-gnu/riscv64-plct-linux-gnu/sysroot --enable-languages=c,c++,fortran,objc,obj-c++ --with-arch=rv64gc --with-abi=lp64d --with-pkgversion='RuyiSDK 20240324 PLCT-Sources' --with-bugurl=https://github.com/ruyisdk/ruyisdk/issues --enable-__cxa_atexit --disable-libmudflap --disable-libgomp --enable-libquadmath --enable-libquadmath-support --disable-libmpx --with-gmp=/work/riscv64-plct-linux-gnu/buildtools --with-mpfr=/work/riscv64-plct-linux-gnu/buildtools --with-mpc=/work/riscv64-plct-linux-gnu/buildtools --with-isl=/work/riscv64-plct-linux-gnu/buildtools --enable-lto --enable-threads=posix --enable-target-optspace --enable-linker-build-id --with-linker-hash-style=gnu --enable-plugin --disable-nls --enable-multiarch --with-local-prefix=/opt/ruyi/riscv64-plct-linux-gnu/riscv64-plct-linux-gnu/sysroot --enable-long-long
+Configured with: /work/riscv64-plct-linux-gnu/src/gcc/configure --build=x86_64-build_pc-linux-gnu --host=x86_64-build_pc-linux-gnu --target=riscv64-plct-linux-gnu --prefix=/opt/ruyi/riscv64-plct-linux-gnu --exec_prefix=/opt/ruyi/riscv64-plct-linux-gnu --with-sysroot=/opt/ruyi/riscv64-plct-linux-gnu/riscv64-plct-linux-gnu/sysroot --enable-languages=c,c++,fortran,objc,obj-c++ --with-arch=rv64gc --with-abi=lp64d --with-pkgversion='RuyiSDK 20250401 PLCT-Sources' --with-bugurl=https://github.com/ruyisdk/ruyisdk/issues --enable-__cxa_atexit --disable-libmudflap --disable-libgomp --disable-libquadmath --disable-libquadmath-support --disable-libmpx --with-gmp=/work/riscv64-plct-linux-gnu/buildtools --with-mpfr=/work/riscv64-plct-linux-gnu/buildtools --with-mpc=/work/riscv64-plct-linux-gnu/buildtools --with-isl=/work/riscv64-plct-linux-gnu/buildtools --enable-lto --enable-threads=posix --enable-target-optspace --enable-linker-build-id --with-linker-hash-style=gnu --enable-plugin --disable-nls --disable-multilib --with-local-prefix=/opt/ruyi/riscv64-plct-linux-gnu/riscv64-plct-linux-gnu/sysroot --enable-long-long
 Thread model: posix
 Supported LTO compression algorithms: zlib zstd
-gcc version 13.1.0 (RuyiSDK 20240324 PLCT-Sources)
+gcc version 14.1.0 (RuyiSDK 20250401 PLCT-Sources)
 ```
 
 4. Extract and build CoreMark with Ruyi
@@ -334,22 +341,22 @@ make PORT_DIR=linux64 link
 «Ruyi venv-gnu-plct» [test@arch ruyisdk]$ mkdir coremark && cd coremark
 «Ruyi venv-gnu-plct» [test@arch coremark]$ ruyi extract coremark
 warn: this ruyi installation has telemetry mode set to on, and will upload non-tracking usage information to RuyiSDK-managed servers every Wednesday
-info: the next upload will happen anytime ruyi is executed between 2025-03-19 08:00:00 +0800 and 2025-03-20 08:00:00 +0800
+info: the next upload will happen anytime ruyi is executed between 2025-04-16 08:00:00 +0800 and 2025-04-17 08:00:00 +0800
 info: in order to hide this banner:
 info: - opt out with ruyi telemetry optout
 info: - or give consent with ruyi telemetry consent
 info: downloading https://mirror.iscas.ac.cn/ruyisdk/dist/coremark-1.01.tar.gz to /home/test/.cache/ruyi/distfiles/coremark-1.01.tar.gz
   % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
                                  Dload  Upload   Total   Spent    Left  Speed
-100  391k  100  391k    0     0   765k      0 --:--:-- --:--:-- --:--:--  766k
+100  391k  100  391k    0     0  1192k      0 --:--:-- --:--:-- --:--:-- 1190k
 info: extracting coremark-1.01.tar.gz for package coremark-1.0.1
 info: package coremark-1.0.1 extracted to current working directory
+«Ruyi venv-gnu-plct» [test@arch coremark]$ ls
+barebones  core_list_join.c  core_main.c  coremark.h  core_matrix.c  core_state.c  core_util.c  cygwin  docs  LICENSE.md  linux  linux64  Makefile  README.md  simple
 «Ruyi venv-gnu-plct» [test@arch coremark]$ sed -i 's/\bgcc\b/riscv64-plct-linux-gnu-gcc/g' linux64/core_portme.mak
 «Ruyi venv-gnu-plct» [test@arch coremark]$ make PORT_DIR=linux64 link
 riscv64-plct-linux-gnu-gcc -O2 -Ilinux64 -I. -DFLAGS_STR=\""-O2   -lrt"\" -DITERATIONS=0  core_list_join.c core_main.c core_matrix.c core_state.c core_util.c linux64/core_portme.c -o ./coremark.exe -lrt
 Link performed along with compile
-«Ruyi venv-gnu-plct» [test@arch coremark]$ file coremark.exe
-coremark.exe: ELF 64-bit LSB executable, UCB RISC-V, RVC, double-float ABI, version 1 (SYSV), dynamically linked, interpreter /lib/ld-linux-riscv64-lp64d.so.1, BuildID[sha1]=310ecde40710e1cccfffdf1f541cb610aa593b26, for GNU/Linux 4.15.0, with debug_info, not stripped
 ```
 
 5. Send file to DuoS
@@ -375,11 +382,11 @@ coremark.exe
 «Ruyi venv-gnu-plct» debian@duos:~$ ./coremark.exe
 2K performance run parameters for coremark.
 CoreMark Size    : 666
-Total ticks      : 11972
-Total time (secs): 11.972000
-Iterations/Sec   : 2505.846976
-Iterations       : 30000
-Compiler version : GCC13.1.0
+Total ticks      : 15567
+Total time (secs): 15.567000
+Iterations/Sec   : 2569.538126
+Iterations       : 40000
+Compiler version : GCC14.1.0
 Compiler flags   : -O2   -lrt
 Memory location  : Please put data memory location here
                         (e.g. code in flash, data on heap etc)
@@ -387,9 +394,9 @@ seedcrc          : 0xe9f5
 [0]crclist       : 0xe714
 [0]crcmatrix     : 0x1fd7
 [0]crcstate      : 0x8e3a
-[0]crcfinal      : 0x5275
+[0]crcfinal      : 0x25b5
 Correct operation validated. See readme.txt for run and reporting rules.
-CoreMark 1.0 : 2505.846976 / GCC13.1.0 -O2   -lrt / Heap
+CoreMark 1.0 : 2569.538126 / GCC14.1.0 -O2   -lrt / Heap
 ```
 
 **CoreMark Results:**
@@ -398,11 +405,11 @@ CoreMark is a benchmark used to evaluate embedded processor performance. A highe
 
 | Metric                | Value       | Description                                                  |
 |-----------------------|-------------|--------------------------------------------------------------|
-| **Iterations/Sec**    | 2505.846976 | Number of iterations completed per second (higher is better) |
-| **Total ticks**       | 11972       | Total number of clock cycles                                 |
-| **Total time (secs)** | 11.972000   | Total execution time in seconds                              |
-| **Iterations**        | 30000       | Total number of iterations performed                         |
-| **Compiler version**  | GCC13.1.0   | Compiler used for the test                                   |
+| **Iterations/Sec**    | 2569.538126 | Number of iterations completed per second (higher is better) |
+| **Total ticks**       | 15567       | Total number of clock cycles                                 |
+| **Total time (secs)** | 15.567000   | Total execution time in seconds                              |
+| **Iterations**        | 40000       | Total number of iterations performed                         |
+| **Compiler version**  | GCC14.1.0   | Compiler used for the test                                   |
 | **Compiler flags**    | -O2 -lrt    | Compilation flags used                                       |
 | **Memory location**   | Heap        | Where data is stored during execution                        |
 
@@ -412,11 +419,11 @@ These results demonstrate good performance of the Sophgo SG2000 SoC when running
 
 The following table summarizes the test results for GNU Toolchain on Sophgo SG2000 SoC:
 
-| Test Case                  | Expected Result                              | Actual Result                                                             | Status  |
-|----------------------------|----------------------------------------------|---------------------------------------------------------------------------|---------|
-| **Toolchain Installation** | Successfully installed toolchain             | Installed to `~/.local/share/ruyi/binaries/riscv64/gnu-plct-0.20240324.0` | ✅ PASS |
-| **Compiler Verification**  | GCC 13.1.0 for RISC-V architecture           | GCC 13.1.0 with rv64gc architecture, lp64d ABI                            | ✅ PASS |
-| **Hello World Test**       | Successful compilation and execution         | Successfully compiled and executed                                        | ✅ PASS |
-| **CoreMark Benchmark**     | Successfully compile and run benchmark       | Successfully compiled and completed benchmark with score of 2505.846976   | ✅ PASS |
+| Test Case                  | Expected Result                        | Actual Result                                                             | Status  |
+|----------------------------|----------------------------------------|---------------------------------------------------------------------------|---------|
+| **Toolchain Installation** | Successfully installed toolchain       | Installed to `~/.local/share/ruyi/binaries/riscv64/gnu-plct-0.20250401.0` | ✅ PASS |
+| **Compiler Verification**  | GCC 14.1.0 for RISC-V architecture     | GCC 14.1.0 with rv64gc architecture, lp64d ABI                            | ✅ PASS |
+| **Hello World Test**       | Successful compilation and execution   | Successfully compiled and executed                                        | ✅ PASS |
+| **CoreMark Benchmark**     | Successfully compile and run benchmark | Successfully compiled and completed benchmark with score of 2569.538126   | ✅ PASS |
 
 All tests passed successfully, confirming that the GNU Toolchain works correctly on the Sophgo SG2000 SoC.
