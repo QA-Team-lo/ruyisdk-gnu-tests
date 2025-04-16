@@ -288,7 +288,7 @@ make PORT_DIR=linux64 XCFLAGS="-march=rv64gc" link
 
 ```log
 «Ruyi venv-gnu-upstream» [openeuler@openeuler-riscv64 ~]$ make PORT_DIR=linux64 XCFLAGS="-march=rv64gc" link
-riscv64-unknown-linux-gnu-gcc -O2 -Ilinux64 -I. -DFLAGS_STR=\""-O2 -march=rv64gc  -lrt"\" -DITERATIONS=0 -march=rv64gc core_list_join.c core_main.c core_matrix.c core_state.c core_util.c linux64/core_portme.c -o ./coremark.exe -lrt
+riscv64-unknown-linux-gnu-gcc -O2 -Ilinux64 -I. -DFLAGS_STR="-O2 -march=rv64gc  -lrt" -DITERATIONS=0 -march=rv64gc core_list_join.c core_main.c core_matrix.c core_state.c core_util.c linux64/core_portme.c -o ./coremark.exe -lrt
 Link performed along with compile
 ```
 
