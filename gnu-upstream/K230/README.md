@@ -4,7 +4,7 @@
 
 ### System Information
 - RuyiSDK on CanMV K230 with Canaan Kendryte K230 SoC
-- Testing date: March 14, 2025
+- Testing date: April 29, 2025
 
 ### Hardware Information
 - CanMV K230 board
@@ -33,29 +33,25 @@ ruyi install toolchain/gnu-upstream
 **Result:**
 ```bash
 root@v:~# ruyi install toolchain/gnu-upstream
-warn: this ruyi installation has telemetry mode set to on, and will upload non-tracking usage information to RuyiSDK-managed servers every Friday
-info: usage information has already been uploaded today at 2025-03-14 13:05:43 +0000
-info: in order to hide this banner:
-info: - opt out with ruyi telemetry optout
-info: - or give consent with ruyi telemetry consent
-info: downloading https://mirror.iscas.ac.cn/ruyisdk/dist/RuyiSDK-20231212-Upstream-Sources-HOST-riscv64-linux-gnu-riscv64-unknown-linux-gnu.tar.xz to /root/.cache/ruyi/distfiles/RuyiSDK-20231212-Upstream-Sources-HOST-riscv64-linux-gnu-riscv64-unknown-linux-gnu.tar.xz
---2025-03-14 13:06:11--  https://mirror.iscas.ac.cn/ruyisdk/dist/RuyiSDK-20231212-Upstream-Sources-HOST-riscv64-linux-gnu-riscv64-unknown-linux-gnu.tar.xz
+info: downloading https://mirror.iscas.ac.cn/ruyisdk/dist/RuyiSDK-20250401-Upstream-Sources-HOST-riscv64-linux-gnu-riscv64-unknown-linux-gnu.tar.xz to /root/.cache/ruyi/distfiles/RuyiSDK-20250401-Upstream-Sources-HOST-riscv64-linux-gnu-riscv64-unknown-linux-gnu.tar.xz
+--2025-04-29 12:53:39--  https://mirror.iscas.ac.cn/ruyisdk/dist/RuyiSDK-20250401-Upstream-Sources-HOST-riscv64-linux-gnu-riscv64-unknown-linux-gnu.tar.xz
 Resolving mirror.iscas.ac.cn (mirror.iscas.ac.cn)... 124.16.138.126
 Connecting to mirror.iscas.ac.cn (mirror.iscas.ac.cn)|124.16.138.126|:443... connected.
 HTTP request sent, awaiting response... 200 OK
-Length: 235308640 (224M) [application/octet-stream]
-Saving to: ‘/root/.cache/ruyi/distfiles/RuyiSDK-20231212-Upstream-Sources-HOST-riscv64-linux-gnu-riscv64-unknown-linux-gnu.tar.xz’
+Length: 168839664 (161M) [application/octet-stream]
+Saving to: ‘/root/.cache/ruyi/distfiles/RuyiSDK-20250401-Upstream-Sources-HOST-riscv64-linux-gnu-riscv64-unknown-linux-gnu.tar.xz’
 
-/root/.cache/ruyi/d 100%[===================>] 224.41M  8.39MB/s    in 28s     
+/root/.cache/ruyi/distfiles/RuyiSDK 100%[================================================================>] 161.02M  6.74MB/s    in 24s
 
-2025-03-14 13:06:39 (8.01 MB/s) - ‘/root/.cache/ruyi/distfiles/RuyiSDK-20231212-Upstream-Sources-HOST-riscv64-linux-gnu-riscv64-unknown-linux-gnu.tar.xz’ saved [235308640/235308640]
+2025-04-29 12:54:03 (6.77 MB/s) - ‘/root/.cache/ruyi/distfiles/RuyiSDK-20250401-Upstream-Sources-HOST-riscv64-linux-gnu-riscv64-unknown-linux-gnu.tar.xz’ saved [168839664/168839664]
 
-info: extracting RuyiSDK-20231212-Upstream-Sources-HOST-riscv64-linux-gnu-riscv64-unknown-linux-gnu.tar.xz for package gnu-upstream-0.20231212.0
-info: package gnu-upstream-0.20231212.0 installed to /root/.local/share/ruyi/binaries/riscv64/gnu-upstream-0.20231212.0
+info: extracting RuyiSDK-20250401-Upstream-Sources-HOST-riscv64-linux-gnu-riscv64-unknown-linux-gnu.tar.xz for package gnu-upstream-0.20250401.0
+
+info: package gnu-upstream-0.20250401.0 installed to /root/.local/share/ruyi/binaries/riscv64/gnu-upstream-0.20250401.0
 
 ```
 
-This command downloaded the toolchain package (~224MB) from ISCAS mirror and installed it to `/root/.local/share/ruyi/binaries/riscv64/gnu-upstream-0.20231212.0`.
+This command downloaded the toolchain package (~161MB) from ISCAS mirror and installed it to `/root/.local/share/ruyi/binaries/riscv64/gnu-upstream-0.20250401.0`.
 
 ### 2. Create Virtual Environment
 
@@ -67,11 +63,6 @@ ruyi venv -t toolchain/gnu-upstream generic venv-gnu-upstream
 **Result:**
 ```bash
 root@v:~# ruyi venv -t toolchain/gnu-upstream generic venv-gnu-upstream
-warn: this ruyi installation has telemetry mode set to on, and will upload non-tracking usage information to RuyiSDK-managed servers every Friday
-info: usage information has already been uploaded today at 2025-03-14 13:05:43 +0000
-info: in order to hide this banner:
-info: - opt out with ruyi telemetry optout
-info: - or give consent with ruyi telemetry consent
 info: Creating a Ruyi virtual environment at venv-gnu-upstream...
 info: The virtual environment is now created.
 
@@ -87,41 +78,32 @@ The virtual environment also comes with ready-made CMake toolchain file
 and Meson cross file. Check the virtual environment root for those;
 comments in the files contain usage instructions.
 
-root@v:~# 
+root@v:~#
 
 ```
 
 **Verification of created environment contents:**
 ```bash
 root@v:~# ls ~/venv-gnu-upstream/
-bin
-meson-cross.ini
-meson-cross.riscv64-unknown-linux-gnu.ini
-ruyi-cache.v2.toml
-ruyi-venv.toml
-sysroot
-sysroot.riscv64-unknown-linux-gnu
-toolchain.cmake
-toolchain.riscv64-unknown-linux-gnu.cmake
+bin                                        ruyi-cache.v2.toml  sysroot.riscv64-unknown-linux-gnu
+meson-cross.ini                            ruyi-venv.toml      toolchain.cmake
+meson-cross.riscv64-unknown-linux-gnu.ini  sysroot             toolchain.riscv64-unknown-linux-gnu.cmake
 root@v:~# ls ~/venv-gnu-upstream/bin
-riscv64-unknown-linux-gnu-addr2line   riscv64-unknown-linux-gnu-gdb-add-index
-riscv64-unknown-linux-gnu-ar          riscv64-unknown-linux-gnu-gfortran
-riscv64-unknown-linux-gnu-as          riscv64-unknown-linux-gnu-gprof
-riscv64-unknown-linux-gnu-c++         riscv64-unknown-linux-gnu-ld
-riscv64-unknown-linux-gnu-c++filt     riscv64-unknown-linux-gnu-ld.bfd
-riscv64-unknown-linux-gnu-cc          riscv64-unknown-linux-gnu-ldd
-riscv64-unknown-linux-gnu-cpp         riscv64-unknown-linux-gnu-lto-dump
-riscv64-unknown-linux-gnu-elfedit     riscv64-unknown-linux-gnu-nm
-riscv64-unknown-linux-gnu-g++         riscv64-unknown-linux-gnu-objcopy
-riscv64-unknown-linux-gnu-gcc         riscv64-unknown-linux-gnu-objdump
-riscv64-unknown-linux-gnu-gcc-ar      riscv64-unknown-linux-gnu-ranlib
-riscv64-unknown-linux-gnu-gcc-nm      riscv64-unknown-linux-gnu-readelf
-riscv64-unknown-linux-gnu-gcc-ranlib  riscv64-unknown-linux-gnu-size
-riscv64-unknown-linux-gnu-gcov        riscv64-unknown-linux-gnu-strings
-riscv64-unknown-linux-gnu-gcov-dump   riscv64-unknown-linux-gnu-strip
-riscv64-unknown-linux-gnu-gcov-tool   ruyi-activate
-riscv64-unknown-linux-gnu-gdb
-root@v:~# 
+riscv64-unknown-linux-gnu-addr2line   riscv64-unknown-linux-gnu-gcov-dump        riscv64-unknown-linux-gnu-ld.bfd
+riscv64-unknown-linux-gnu-ar          riscv64-unknown-linux-gnu-gcov-tool        riscv64-unknown-linux-gnu-ldd
+riscv64-unknown-linux-gnu-as          riscv64-unknown-linux-gnu-gdb              riscv64-unknown-linux-gnu-lto-dump
+riscv64-unknown-linux-gnu-c++         riscv64-unknown-linux-gnu-gdb-add-index    riscv64-unknown-linux-gnu-nm
+riscv64-unknown-linux-gnu-c++filt     riscv64-unknown-linux-gnu-gfortran         riscv64-unknown-linux-gnu-objcopy
+riscv64-unknown-linux-gnu-cc          riscv64-unknown-linux-gnu-gp-archive       riscv64-unknown-linux-gnu-objdump
+riscv64-unknown-linux-gnu-cpp         riscv64-unknown-linux-gnu-gp-collect-app   riscv64-unknown-linux-gnu-ranlib
+riscv64-unknown-linux-gnu-elfedit     riscv64-unknown-linux-gnu-gp-display-html  riscv64-unknown-linux-gnu-readelf
+riscv64-unknown-linux-gnu-g++         riscv64-unknown-linux-gnu-gp-display-src   riscv64-unknown-linux-gnu-size
+riscv64-unknown-linux-gnu-gcc         riscv64-unknown-linux-gnu-gp-display-text  riscv64-unknown-linux-gnu-strings
+riscv64-unknown-linux-gnu-gcc-ar      riscv64-unknown-linux-gnu-gprof            riscv64-unknown-linux-gnu-strip
+riscv64-unknown-linux-gnu-gcc-nm      riscv64-unknown-linux-gnu-gprofng          ruyi-activate
+riscv64-unknown-linux-gnu-gcc-ranlib  riscv64-unknown-linux-gnu-gstack
+riscv64-unknown-linux-gnu-gcov        riscv64-unknown-linux-gnu-ld
+root@v:~#
 
 ```
 
@@ -155,19 +137,20 @@ riscv64-unknown-linux-gnu-gcc -v
 ```bash
 «Ruyi venv-gnu-upstream» root@v:~# riscv64-unknown-linux-gnu-gcc -v
 Using built-in specs.
-COLLECT_GCC=/root/.local/share/ruyi/binaries/riscv64/gnu-upstream-0.20231212.0/bin/riscv64-unknown-linux-gnu-gcc
-COLLECT_LTO_WRAPPER=/root/.local/share/ruyi/binaries/riscv64/gnu-upstream-0.20231212.0/bin/../libexec/gcc/riscv64-unknown-linux-gnu/13.2.0/lto-wrapper
+COLLECT_GCC=/root/.local/share/ruyi/binaries/riscv64/gnu-upstream-0.20250401.0/bin/riscv64-unknown-linux-gnu-gcc
+COLLECT_LTO_WRAPPER=/root/.local/share/ruyi/binaries/riscv64/gnu-upstream-0.20250401.0/bin/../libexec/gcc/riscv64-unknown-linux-gnu/14.2.0/lto-wrapper
 Target: riscv64-unknown-linux-gnu
-Configured with: /work/HOST-riscv64-linux-gnu/riscv64-unknown-linux-gnu/src/gcc/configure --build=x86_64-build_pc-linux-gnu --host=riscv64-host_unknown-linux-gnu --target=riscv64-unknown-linux-gnu --prefix=/opt/ruyi/HOST-riscv64-linux-gnu/riscv64-unknown-linux-gnu --exec_prefix=/opt/ruyi/HOST-riscv64-linux-gnu/riscv64-unknown-linux-gnu --with-sysroot=/opt/ruyi/HOST-riscv64-linux-gnu/riscv64-unknown-linux-gnu/riscv64-unknown-linux-gnu/sysroot --enable-languages=c,c++,fortran,objc,obj-c++ --with-arch=rv64gc --with-abi=lp64d --with-pkgversion='RuyiSDK 20231212 Upstream-Sources' --with-bugurl=https://github.com/ruyisdk/ruyisdk/issues --enable-__cxa_atexit --disable-libmudflap --disable-libgomp --enable-libquadmath --enable-libquadmath-support --disable-libmpx --with-gmp=/work/HOST-riscv64-linux-gnu/riscv64-unknown-linux-gnu/buildtools/complibs-host --with-mpfr=/work/HOST-riscv64-linux-gnu/riscv64-unknown-linux-gnu/buildtools/complibs-host --with-mpc=/work/HOST-riscv64-linux-gnu/riscv64-unknown-linux-gnu/buildtools/complibs-host --with-isl=/work/HOST-riscv64-linux-gnu/riscv64-unknown-linux-gnu/buildtools/complibs-host --enable-lto --enable-threads=posix --enable-target-optspace --enable-linker-build-id --with-linker-hash-style=gnu --enable-plugin --disable-nls --enable-multiarch --with-local-prefix=/opt/ruyi/HOST-riscv64-linux-gnu/riscv64-unknown-linux-gnu/riscv64-unknown-linux-gnu/sysroot --enable-long-long
+Configured with: /work/HOST-riscv64-linux-gnu/riscv64-unknown-linux-gnu/src/gcc/configure --build=x86_64-build_pc-linux-gnu --host=riscv64-host_unknown-linux-gnu --target=riscv64-unknown-linux-gnu --prefix=/opt/ruyi/HOST-riscv64-linux-gnu/riscv64-unknown-linux-gnu --exec_prefix=/opt/ruyi/HOST-riscv64-linux-gnu/riscv64-unknown-linux-gnu --with-sysroot=/opt/ruyi/HOST-riscv64-linux-gnu/riscv64-unknown-linux-gnu/riscv64-unknown-linux-gnu/sysroot --enable-languages=c,c++,fortran,objc,obj-c++ --with-arch=rv64gc --with-abi=lp64d --with-pkgversion='RuyiSDK 20250401 Upstream-Sources' --with-bugurl=https://github.com/ruyisdk/ruyisdk/issues --enable-__cxa_atexit --disable-libmudflap --disable-libgomp --disable-libquadmath --disable-libquadmath-support --disable-libmpx --with-gmp=/work/HOST-riscv64-linux-gnu/riscv64-unknown-linux-gnu/buildtools/complibs-host --with-mpfr=/work/HOST-riscv64-linux-gnu/riscv64-unknown-linux-gnu/buildtools/complibs-host --with-mpc=/work/HOST-riscv64-linux-gnu/riscv64-unknown-linux-gnu/buildtools/complibs-host --with-isl=/work/HOST-riscv64-linux-gnu/riscv64-unknown-linux-gnu/buildtools/complibs-host --enable-lto --enable-threads=posix --enable-target-optspace --enable-linker-build-id --with-linker-hash-style=gnu --enable-plugin --disable-nls --disable-multilib --with-local-prefix=/opt/ruyi/HOST-riscv64-linux-gnu/riscv64-unknown-linux-gnu/riscv64-unknown-linux-gnu/sysroot --enable-long-long
 Thread model: posix
 Supported LTO compression algorithms: zlib zstd
-gcc version 13.2.0 (RuyiSDK 20231212 Upstream-Sources) 
-«Ruyi venv-gnu-upstream» root@v:~# 
+gcc version 14.2.0 (RuyiSDK 20250401 Upstream-Sources)
+
+«Ruyi venv-gnu-upstream» root@v:~#
 
 ```
 
 The output confirmed a successful installation showing:
-- GCC version: 13.2.0 (RuyiSDK 20231212 Upstream-Sources)
+- GCC version: 14.2.0 (RuyiSDK 20250401 Upstream-Sources)
 - Target architecture: riscv64-unknown-linux-gnu
 - Thread model: posix
 - Configured with appropriate RISC-V specific options (rv64gc architecture, lp64d ABI)
@@ -178,9 +161,9 @@ The output confirmed a successful installation showing:
 ```bash
 «Ruyi venv-gnu-upstream» root@v:~# nano hello.c
 «Ruyi venv-gnu-upstream» root@v:~# riscv64-unknown-linux-gnu-gcc hello.c -o hello_upstream
-«Ruyi venv-gnu-upstream» root@v:~# ./hello_upstream 
+«Ruyi venv-gnu-upstream» root@v:~# ./hello_upstream
 Hello, World!
-«Ruyi venv-gnu-upstream» root@v:~# 
+«Ruyi venv-gnu-upstream» root@v:~#
 ```
 
 The program executed successfully and output "Hello, World!", confirming basic functionality of the toolchain and proper integration with the system libraries.
@@ -191,29 +174,9 @@ The program executed successfully and output "Hello, World!", confirming basic f
 
 1. Extract the CoreMark package with Ruyi:
 ```bash
-«Ruyi venv-gnu-upstream» root@v:~# mkdir coremark
-«Ruyi venv-gnu-upstream» root@v:~# cd coremark
-«Ruyi venv-gnu-upstream» root@v:~/coremark# ruyi extract coremark
-warn: this ruyi installation has telemetry mode set to on, and will upload non-tracking usage information to RuyiSDK-managed servers every Friday
-info: usage information has already been uploaded today at 2025-03-14 13:05:43 +0000
-info: in order to hide this banner:
-info: - opt out with ruyi telemetry optout
-info: - or give consent with ruyi telemetry consent
-info: downloading https://mirror.iscas.ac.cn/ruyisdk/dist/coremark-1.01.tar.gz to /root/.cache/ruyi/distfiles/coremark-1.01.tar.gz
---2025-03-14 13:19:06--  https://mirror.iscas.ac.cn/ruyisdk/dist/coremark-1.01.tar.gz
-Resolving mirror.iscas.ac.cn (mirror.iscas.ac.cn)... 124.16.138.126
-Connecting to mirror.iscas.ac.cn (mirror.iscas.ac.cn)|124.16.138.126|:443... connected.
-HTTP request sent, awaiting response... 200 OK
-Length: 401208 (392K) [application/octet-stream]
-Saving to: ‘/root/.cache/ruyi/distfiles/coremark-1.01.tar.gz’
-
-/root/.cache/ruyi/d 100%[===================>] 391.80K  2.02MB/s    in 0.2s    
-
-2025-03-14 13:19:07 (2.02 MB/s) - ‘/root/.cache/ruyi/distfiles/coremark-1.01.tar.gz’ saved [401208/401208]
-
 info: extracting coremark-1.01.tar.gz for package coremark-1.0.1
 info: package coremark-1.0.1 extracted to current working directory
-«Ruyi venv-gnu-upstream» root@v:~/coremark# 
+«Ruyi venv-gnu-upstream» root@v:~/coremark#
 
 ```
 
@@ -237,8 +200,8 @@ Link performed along with compile
 ```bash
 «Ruyi venv-gnu-upstream» root@v:~/coremark# ls -al
 total 160
-drwxr-xr-x 8 root root  4096 Mar 14 13:26 .
-drwx------ 7 root root  4096 Mar 14 13:22 ..
+drwxr-xr-x 8 root root  4096 Apr 29 13:35 .
+drwx------ 9 root root  4096 Apr 29 13:34 ..
 -rw-rw-r-- 1 root root  9416 May 23  2018 LICENSE.md
 -rw-rw-r-- 1 root root  3678 May 23  2018 Makefile
 -rw-rw-r-- 1 root root 18799 May 23  2018 README.md
@@ -248,16 +211,16 @@ drwxrwxr-x 2 root root  4096 May 23  2018 barebones
 -rw-rw-r-- 1 root root  8097 May 23  2018 core_matrix.c
 -rw-rw-r-- 1 root root  7186 May 23  2018 core_state.c
 -rw-rw-r-- 1 root root  5171 May 23  2018 core_util.c
--rwxr-xr-x 1 root root 27680 Mar 14 13:26 coremark.exe
+-rwxr-xr-x 1 root root 27000 Apr 29 13:35 coremark.exe
 -rw-rw-r-- 1 root root  4373 May 23  2018 coremark.h
 drwxrwxr-x 2 root root  4096 May 23  2018 cygwin
 drwxrwxr-x 3 root root  4096 May 23  2018 docs
 drwxrwxr-x 2 root root  4096 May 23  2018 linux
-drwxrwxr-x 2 root root  4096 Mar 14 13:21 linux64
+drwxrwxr-x 2 root root  4096 Apr 29 13:35 linux64
 drwxrwxr-x 2 root root  4096 May 23  2018 simple
 «Ruyi venv-gnu-upstream» root@v:~/coremark# file coremark.exe
-coremark.exe: ELF 64-bit LSB executable, UCB RISC-V, RVC, double-float ABI, version 1 (SYSV), dynamically linked, interpreter /lib/ld-linux-riscv64-lp64d.so.1, BuildID[sha1]=42284b8365034fa7c6428be87b1cd8ac4ea64697, for GNU/Linux 4.15.0, with debug_info, not stripped
-«Ruyi venv-gnu-upstream» root@v:~/coremark# 
+coremark.exe: ELF 64-bit LSB executable, UCB RISC-V, RVC, double-float ABI, version 1 (SYSV), dynamically linked, interpreter /lib/ld-linux-riscv64-lp64d.so.1, BuildID[sha1]=5c8618cf62e0f1f7dd462ba5bddb03479631d0e9, for GNU/Linux 4.15.0, with debug_info, not stripped
+«Ruyi venv-gnu-upstream» root@v:~/coremark#
 
 ```
 
@@ -267,11 +230,11 @@ coremark.exe: ELF 64-bit LSB executable, UCB RISC-V, RVC, double-float ABI, vers
 «Ruyi venv-gnu-upstream» root@v:~/coremark# ./coremark.exe
 2K performance run parameters for coremark.
 CoreMark Size    : 666
-Total ticks      : 20247
-Total time (secs): 20.247000
-Iterations/Sec   : 5432.903640
+Total ticks      : 20210
+Total time (secs): 20.210000
+Iterations/Sec   : 5442.850074
 Iterations       : 110000
-Compiler version : GCC13.2.0
+Compiler version : GCC14.2.0
 Compiler flags   : -O2   -lrt
 Memory location  : Please put data memory location here
                         (e.g. code in flash, data on heap etc)
@@ -281,8 +244,8 @@ seedcrc          : 0xe9f5
 [0]crcstate      : 0x8e3a
 [0]crcfinal      : 0x33ff
 Correct operation validated. See readme.txt for run and reporting rules.
-CoreMark 1.0 : 5432.903640 / GCC13.2.0 -O2   -lrt / Heap
-«Ruyi venv-gnu-upstream» root@v:~/coremark# 
+CoreMark 1.0 : 5442.850074 / GCC14.2.0 -O2   -lrt / Heap
+«Ruyi venv-gnu-upstream» root@v:~/coremark#
 ```
 
 **CoreMark Results:**
@@ -291,25 +254,58 @@ CoreMark is a benchmark used to evaluate embedded processor performance. A highe
 
 | Metric                | Value       | Description                                                  |
 | --------------------- | ----------- | ------------------------------------------------------------ |
-| **Iterations/Sec**    | 5432.903640 | Number of iterations completed per second (higher is better) |
-| **Total ticks**       | 20247       | Total number of clock cycles                                 |
-| **Total time (secs)** | 20.247      | Total execution time in seconds                              |
+| **Iterations/Sec**    | 5442.850074 | Number of iterations completed per second (higher is better) |
+| **Total ticks**       | 20210       | Total number of clock cycles                                 |
+| **Total time (secs)** | 20.210000   | Total execution time in seconds                              |
 | **Iterations**        | 110000      | Total number of iterations performed                         |
-| **Compiler version**  | GCC13.2.0   | Compiler used for the test                                   |
+| **Compiler version**  | GCC14.2.0   | Compiler used for the test                                   |
 | **Compiler flags**    | -O2 -lrt    | Compilation flags used                                       |
 | **Memory location**   | Heap        | Where data is stored during execution                        |
 
 These results demonstrate good performance of the Canaan Kendryte K230 SoC when running CoreMark compiled with the RuyiSDK toolchain.
 
+### 3a. CoreMark Benchmark with `xtheadvector` vector extension enabled
+
+Below is the brief test result for reference, after appending `-march=rv64gc_xtheadvector` to `make`:
+
+```shell
+«Ruyi venv-gnu-upstream» root@v:~/coremark# make PORT_DIR=linux64 link
+riscv64-unknown-linux-gnu-gcc -O2 -Ilinux64 -I. -DFLAGS_STR=\""-O2   -lrt"\" -DITERATIONS=0 -march=rv64gc_xtheadvector  core_list_join.c core_main.c core_matrix.c core_state.c core_util.c linux64/core_portme.c -o ./coremark.exe -lrt
+Link performed along with compile
+«Ruyi venv-gnu-upstream» root@v:~/coremark# file ./coremark.exe
+./coremark.exe: ELF 64-bit LSB executable, UCB RISC-V, RVC, double-float ABI, version 1 (SYSV), dynamically linked, interpreter /lib/ld-linux-riscv64-lp64d.so.1, BuildID[sha1]=735c64755a34097636e2b37e964553b81e79355d, for GNU/Linux 4.15.0, with debug_info, not stripped
+«Ruyi venv-gnu-upstream» root@v:~/coremark# ./coremark.exe
+2K performance run parameters for coremark.
+CoreMark Size    : 666
+Total ticks      : 20211
+Total time (secs): 20.211000
+Iterations/Sec   : 5442.580773
+Iterations       : 110000
+Compiler version : GCC14.2.0
+Compiler flags   : -O2   -lrt
+Memory location  : Please put data memory location here
+                        (e.g. code in flash, data on heap etc)
+seedcrc          : 0xe9f5
+[0]crclist       : 0xe714
+[0]crcmatrix     : 0x1fd7
+[0]crcstate      : 0x8e3a
+[0]crcfinal      : 0x33ff
+Correct operation validated. See readme.txt for run and reporting rules.
+CoreMark 1.0 : 5442.580773 / GCC14.2.0 -O2   -lrt / Heap
+
+```
+
+Similar performance compared to normal builds (as shown above) is observed.
+
 ## Test Summary
 
 The following table summarizes the test results for GNU Upstream Toolchain on Canaan Kendryte K230:
 
-| Test Case                  | Expected Result                        | Actual Result                                                                     | Status |
-| -------------------------- | -------------------------------------- | --------------------------------------------------------------------------------- | ------ |
-| **Toolchain Installation** | Successfully installed toolchain       | Installed to `/root/.local/share/ruyi/binaries/riscv64/gnu-upstream-0.20231212.0` | ✅ PASS |
-| **Compiler Verification**  | GCC 13.2.0 for RISC-V architecture     | GCC 13.2.0 with rv64gc architecture, lp64d ABI                                    | ✅ PASS |
-| **Hello World Test**       | Successful compilation and execution   | Successfully compiled and executed                                                | ✅ PASS |
-| **CoreMark Benchmark**     | Successfully compile and run benchmark | Successfully compiled and completed benchmark with score of 5432.903640           | ✅ PASS |
+| Test Case                  | Expected Result                        | Actual Result                                                                                                             | Status |
+| -------------------------- | -------------------------------------- | ------------------------------------------------------------------------------------------------------------------------- | ------ |
+| **Toolchain Installation** | Successfully installed toolchain       | Installed to `/root/.local/share/ruyi/binaries/riscv64/gnu-upstream-0.20250401.0`                                         | ✅ PASS |
+| **Compiler Verification**  | GCC 14.2.0 for RISC-V architecture     | GCC 14.2.0 with rv64gc architecture, lp64d ABI                                                                            | ✅ PASS |
+| **Hello World Test**       | Successful compilation and execution   | Successfully compiled and executed                                                                                        | ✅ PASS |
+| **CoreMark Benchmark**     | Successfully compile and run benchmark | Successfully compiled and completed benchmark with score of 5442.850074 (5442.580773 with xtheadvector extension enabled) | ✅ PASS |
 
 All tests passed successfully, confirming that the GNU Upstream Toolchain works correctly on the Canaan Kendryte K230 SoC.
