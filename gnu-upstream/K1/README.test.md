@@ -1,6 +1,6 @@
 ---
 title: "SpacemiT K1/M1 (X60) GNU Toolchain (gnu-upstream) Test Report"
-target_config: "target/k1.toml"
+target_config: "targets/k1.toml"
 unit_name: "gnu-upstream"
 unit_version: "0.1.0" # the version of this test unit itself
 tags: ["toolchain", "gcc", "gnu-upstream", "K1"]
