@@ -28,5 +28,5 @@
 - JH7110 (U74): @saicogn
 - K230 (c908): @aisuneko
 - SG2042 (c920v2): @wychlw
-- CV1800B (c906fdv): SongYuSheng1216
+- CV1800B (c906fdv): @SongYuSheng1216, @Ruixi-Cheng
 - SG2000 (c906fdv): @zeyi2
