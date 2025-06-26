@@ -10,9 +10,9 @@
 ## 测试情况
 
 | GCC 编译器/开发板（SoC） | D1 (c906fdv) | SpacemiT K1/M1 (X60) | TH1520 (c910) | JH7110 (U74) | K230 (c908) | SG2042 (c920v2) | CV1800B (c906fdv) | SG2000 (c906fdv) |
-| ------------------------ | ------------ | -------------------- | ------------- | ------------ | ----------- | --------------- | ----------------- | ---------------- |
-| gnu-upstream             | ✅ PASS       | ✅ PASS               | ✅ PASS        | ✅ PASS       | ✅ PASS      | ✅ PASS          | ✅ PASS                | ✅ PASS           |
-| gnu-plct                 | ✅ PASS       | ✅ PASS               | ✅ PASS        | ✅ PASS       | ✅ PASS      | ✅ PASS          | ✅ PASS               | ✅ PASS           |
+|--------------------------|--------------|----------------------|---------------|--------------|-------------|-----------------|-------------------|------------------|
+| gnu-upstream             | ✅ PASS      | ✅ PASS              | ✅ PASS       | ✅ PASS      | ✅ PASS     | ✅ PASS         | ✅ PASS           | ✅ PASS          |
+| gnu-plct                 | ✅ PASS      | ✅ PASS              | ✅ PASS       | ✅ PASS      | ✅ PASS     | ✅ PASS         | ✅ PASS           | ❎ FAIL          |
 
 ## License
 
