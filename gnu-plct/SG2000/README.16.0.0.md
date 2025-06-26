@@ -3,11 +3,11 @@
 ## Environment
 
 ### System Information
-- RuyiSDK on MilkV DuoS with Sophgo SG2000 SoC
+- RuyiSDK on MilkV Duo S with Sophgo SG2000 SoC
 - Testing date: June 26, 2025
 
 ### Hardware Information
-- MilkV DuoS
+- MilkV Duo S
 - Sophgo SG2000 SoC
 
 ## Installation
