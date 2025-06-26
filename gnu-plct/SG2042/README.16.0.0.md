@@ -21,7 +21,7 @@
 ```bash
 sudo dnf update
 sudo dnf install wget -y
-wget https://mirror.iscas.ac.cn/ruyisdk/ruyi/releases/0.31.0/ruyi.riscv64
+wget https://mirror.iscas.ac.cn/ruyisdk/ruyi/releases/0.36.0/ruyi.riscv64
 sudo mv ruyi.riscv64 /usr/bin/ruyi
 sudo chmod +x /usr/bin/ruyi
 ```
