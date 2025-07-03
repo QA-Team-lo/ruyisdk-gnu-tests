@@ -1,9 +1,9 @@
 ---
-title: "SpacemiT K1/M1 (X60) GNU Toolchain (gnu-plct) Test Report"
-target_config: "targets/k1.toml"
+title: "Lichee Pi 4A GNU Toolchain (gnu-plct) Test Report"
+target_config: "targets/lpi4a.toml"
 unit_name: "gnu-plct"
 unit_version: "0.1.0" # the version of this test unit itself
-tags: ["toolchain", "gcc", "gnu-plct", "K1"]
+tags: ["toolchain", "gcc", "gnu-plct", "TH1520"]
 gcc_name: "riscv64-plct-linux-gnu-gcc"
 ---
 
@@ -18,7 +18,7 @@ The following hardware and software environment was used for this test:
 ### System Information {id="system-info" depends_on=["check-version"]}
 
 *   **Test Date:** `{{ execution_date }}`
-*   **Target Configuration:** `target/k1.toml`
+*   **Target Configuration:** `targets/lpi4a.toml`
 *   **Test Unit Name:** `{{ metadata.unit_name }}`
 *   **Test Unit Version:** `{{ metadata.unit_version }}`
 *   **Installed Toolchain Package:** `{{ install-toolchain::installed_package_name_version }}`
@@ -27,8 +27,8 @@ The following hardware and software environment was used for this test:
 
 ### Hardware Information
 
-*   Banana Pi BPI-F3 board
-*   SpacemiT K1/M1 SoC (RISC-V SpacemiT X60 core)
+*   Lichee Pi 4A board
+*   TH1520 SoC
 
 ## Installation {id="installation"}
 
@@ -40,10 +40,10 @@ Clean up any potentially existing old environments and download/prepare the Ruyi
 
 ```bash {id="init-ruyi" exec=true description="Download and prepare RuyiSDK CLI" assert.exit_code=0}
 rm -rf ~/venv-gnu-plct ~/ruyi /tmp/coremark_* #~/.local/share/ruyi/
-curl -Lo ~/ruyi https://mirror.iscas.ac.cn/ruyisdk/ruyi/tags/0.36.0/ruyi.riscv64
-chmod +x ~/ruyi
-echo "Ruyi CLI downloaded and prepared. Old directories cleaned."
-~/ruyi update
+#curl -Lo ~/ruyi https://mirror.iscas.ac.cn/ruyisdk/ruyi/tags/0.33.0/ruyi.riscv64
+#chmod +x ~/ruyi
+echo "We assume our LPi4A got ruyi in PATH, only cleaned ruyi dists."
+ruyi update
 ```
 
 **Command Output:**
@@ -57,7 +57,7 @@ Ruyi CLI Initialization Status (based on `assert.exit_code`): {{ init-ruyi::stat
 Install the PLCT GNU Toolchain package using Ruyi.
 
 ```bash {id="install-toolchain" exec=true description="Install PLCT GNU Toolchain" assert.exit_code=0 depends_on=["init-ruyi"]}
-~/ruyi install toolchain/gnu-plct
+ruyi install toolchain/gnu-plct
 ```
 
 **Command Output:**
@@ -73,7 +73,7 @@ Installation Status (based on `assert.exit_code`): {{ install-toolchain::status.
 Create an isolated virtual environment for this test.
 
 ```bash {id="create-venv" exec=true description="Create virtual environment" assert.exit_code=0 depends_on=["install-toolchain"] extract.venv_path=/Creating a Ruyi virtual environment at (\S+)\.\.\./}
-~/ruyi venv -t toolchain/gnu-plct generic venv-gnu-plct
+ruyi venv -t toolchain/gnu-plct generic venv-gnu-plct
 ```
 
 **Command Output:**
@@ -204,7 +204,7 @@ Compile and run CoreMark using default optimization options (`-O2 -lrt`).
 ```bash {id="extract-coremark-default" exec=true description="Create directory and extract CoreMark package (Default Opt.)" assert.exit_code=0 depends_on=["activate-venv"]}
 mkdir -p /tmp/coremark_default
 cd /tmp/coremark_default
-~/ruyi extract coremark
+ruyi extract coremark
 ```
 
 **Command Output (Extract CoreMark - Default):**
@@ -261,14 +261,14 @@ Reported Compiler Flags: `{{ run-coremark-default::cm_compiler_flags_reported }}
 
 ### 4. CoreMark Benchmark (Vector Extension Optimizations) {id="coremark-vector"}
 
-Compile and run CoreMark using `-march=rv64gcv_zvl256b -mabi=lp64d`.
+Compile and run CoreMark using `-march=rv64gc_xtheadvector_xtheadba_xtheadbb_xtheadbs -mabi=lp64d`.
 
 **Command (Extract CoreMark - Vector):**
 
 ```bash {id="extract-coremark-vector" exec=true description="Create directory and extract CoreMark package (Vector Opt.)" assert.exit_code=0 depends_on=["activate-venv"]}
 mkdir -p /tmp/coremark_vector
 cd /tmp/coremark_vector
-~/ruyi extract coremark
+ruyi extract coremark
 ```
 
 **Command Output (Extract CoreMark - Vector):**
@@ -296,7 +296,7 @@ Makefile (Vector) configuration status (based on `assert.exit_code`): {{ config-
 ```bash {id="build-coremark-vector" exec=true description="Compile CoreMark (Vector Extension Opt.)" assert.exit_code=0 assert.stdout_contains="coremark.exe: ELF 64-bit LSB executable" workdir="/tmp/coremark_vector" depends_on=["config-coremark-vector"]}
 . ~/venv-gnu-plct/bin/ruyi-activate
 cd /tmp/coremark_vector
-make PORT_DIR=linux64 XCFLAGS="-march=rv64gcv_zvl256b -mabi=lp64d" link
+make PORT_DIR=linux64 XCFLAGS="-march=rv64gc_xtheadvector_xtheadba_xtheadbb_xtheadbs -mabi=lp64d" link
 file coremark.exe
 ```
 
@@ -338,7 +338,7 @@ Higher CoreMark scores (Iterations/Sec) indicate better performance.
 | **Compiler (from -v)**        | `{{ check-version::gcc_version }}`                  | `{{ check-version::gcc_version }}`                                    |
 
 **Performance Analysis:**
-In this test, CoreMark on the SpacemiT K1/M1 (X60) SoC using GCC `{{ check-version::gcc_version }}` achieved scores of `{{ run-coremark-default::coremark_score }}` (Default Optimizations) and `{{ run-coremark-vector::coremark_vector_score }}` (Vector Extension Optimizations).
+In this test, CoreMark on the TH1520 SoC using GCC `{{ check-version::gcc_version }}` achieved scores of `{{ run-coremark-default::coremark_score }}` (Default Optimizations) and `{{ run-coremark-vector::coremark_vector_score }}` (Vector Extension Optimizations).
 Further analysis of these scores can reveal the specific impact of vector extensions for the CoreMark workload with this compiler version.
 
 ## Test Summary {id="summary" depends_on=["check-version"]}
@@ -346,7 +346,7 @@ Further analysis of these scores can reveal the specific impact of vector extens
 | Test Item | Expected Result                                       | Actual Status (template logic) |
 |---------------------------------------------------|-------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | Ruyi CLI Initialization (`init-ruyi`)               | Ruyi CLI successfully prepared                        | {{ init-ruyi::status.assertion.0 == "Pass" ? "✅ PASS" : "❌ FAIL" }}    |
-| Toolchain Installation (`install-toolchain`)        | Successfully installed                                | {{ install-toolchain::status.assertion.0 == "Pass" ? "✅ PASS" : "❌ FAIL" }}              |
+| Toolchain Installation (`install-toolchain`)        | Successfully installed                                | {{ install-toolchain::status.assertion.0 == "Pass" ? "✅ PASS" : "❌ FAIL" }}             |
 | Compiler Version Check (`check-version`)            | GCC 14.2.0, riscv64-unknown-linux-gnu, rv64gc, lp64d  | {{ check-version::status.assertion == "Pass"  ? "✅ PASS" : "⚠️  CHECK" }} (Version: `{{ check-version::gcc_version }}`) |
 | Hello World Compilation (`compile-hello`)           | Successfully compiled ELF 64-bit                      | {{ compile-hello::status.assertion == "Pass" ? "✅ PASS" : "❌ FAIL" }}                            |
 | Hello World Execution (`run-hello`)                 | Outputs "Hello, world!"                               | {{ run-hello::status.assertion == "Pass" ? "✅ PASS" : "❌ FAIL" }} (Output: `{{ run-hello::stdout_summary }}`)                                   |

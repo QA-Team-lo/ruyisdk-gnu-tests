@@ -1,15 +1,15 @@
 ---
-title: "SpacemiT K1/M1 (X60) GNU Toolchain (gnu-plct) Test Report"
-target_config: "targets/k1.toml"
+title: "Lichee Pi 4A GNU Toolchain (gnu-plct) Test Report"
+target_config: "targets/lpi4a.toml"
 unit_name: "gnu-plct"
 unit_version: "0.1.0" # the version of this test unit itself
-tags: ["toolchain", "gcc", "gnu-plct", "K1"]
+tags: ["toolchain", "gcc", "gnu-plct", "TH1520"]
 gcc_name: "riscv64-plct-linux-gnu-gcc"
 ---
 
-# SpacemiT K1/M1 (X60) GNU Toolchain (gnu-plct) Test Report
+# Lichee Pi 4A GNU Toolchain (gnu-plct) Test Report
 
-This report details a series of basic functionality and performance tests conducted on the bpi-f3 development board using the PLCT GNU Toolchain (`gnu-plct`) provided by RuyiSDK. The tests aim to verify the correct installation of the toolchain, its basic compilation and linking capabilities, and its performance on a standard benchmark (CoreMark).
+This report details a series of basic functionality and performance tests conducted on the lpi-4a development board using the PLCT GNU Toolchain (`gnu-plct`) provided by RuyiSDK. The tests aim to verify the correct installation of the toolchain, its basic compilation and linking capabilities, and its performance on a standard benchmark (CoreMark).
 
 ## Environment Information
 
@@ -17,17 +17,17 @@ The following hardware and software environment was used for this test:
 
 ### System Information
 
-* **Test Date:** `2025-07-04`
-* **Target Configuration:** `target/k1.toml`
+* **Test Date:** `2025-07-03`
+* **Target Configuration:** `targets/lpi4a.toml`
 * **Test Unit Name:** `gnu-plct`
 * **Test Unit Version:** `0.1.0`
 * **GCC Version (from -v):** `16.0.0`
-* RuyiSDK running on a `BananaPI F3`.
+* RuyiSDK running on a `LicheePi 4A`.
 
 ### Hardware Information
 
-* Banana Pi BPI-F3 board
-* SpacemiT K1/M1 SoC (RISC-V SpacemiT X60 core)
+* Lichee Pi 4A board
+* TH1520 SoC
 
 ## Installation
 
@@ -39,72 +39,82 @@ Clean up any potentially existing old environments and download/prepare the Ruyi
 
 ```bash
 rm -rf ~/venv-gnu-plct ~/ruyi /tmp/coremark_* #~/.local/share/ruyi/
-curl -Lo ~/ruyi https://mirror.iscas.ac.cn/ruyisdk/ruyi/tags/0.36.0/ruyi.riscv64
-chmod +x ~/ruyi
-echo "Ruyi CLI downloaded and prepared. Old directories cleaned."
-~/ruyi update
+#curl -Lo ~/ruyi https://mirror.iscas.ac.cn/ruyisdk/ruyi/tags/0.33.0/ruyi.riscv64
+#chmod +x ~/ruyi
+echo "We assume our LPi4A got ruyi in PATH, only cleaned ruyi dists."
+ruyi update
 ```
 
 **Command Output:**
 
 ```output {ref="init-ruyi"}
 [stdout]
-Ruyi CLI downloaded and prepared. Old directories cleaned.
+We assume our LPi4A got ruyi in PATH, only cleaned ruyi dists.
+Enumerating objects: 57, done.
+Counting objects: 1% (1/57)Counting objects: 3% (2/57)Counting objects: 5% (3/57)Counting objects: 7% (4/57)Counting objects: 8% (5/57)Counting objects: 10% (6/57)Counting objects: 12% (7/57)Counting objects: 14% (8/57)Counting objects: 15% (9/57)Counting objects: 17% (10/57)Counting objects: 19% (11/57)Counting objects: 21% (12/57)Counting objects:
+22% (13/57)Counting objects: 24% (14/57)Counting objects: 26% (15/57)Counting objects: 28% (16/57)Counting objects: 29% (17/57)Counting objects:
+31% (18/57)Counting objects: 33% (19/57)Counting objects: 35% (20/57)Counting objects: 36% (21/57)Counting objects: 38% (22/57)Counting objects:
+40% (23/57)Counting objects: 42% (24/57)Counting objects: 43% (25/57)Counting objects:
+45% (26/57)Counting objects: 47% (27/57)Counting objects: 49% (28/57)Counting objects: 50% (29/57)Counting objects: 52% (30/57)Counting objects: 54% (31/57)Counting objects: 56% (32/57)Counting objects:
+57% (33/57)Counting objects: 59% (34/57)Counting objects: 61% (35/57)Counting objects:
+63% (36/57)Counting objects: 64% (37/57)Counting objects: 66% (38/57)Counting objects:
+68% (39/57)Counting objects: 70% (40/57)Counting objects: 71% (41/57)Counting objects: 73% (42/57)Counting objects: 75% (43/57)Counting objects:
+77% (44/57)Counting objects: 78% (45/57)Counting objects: 80% (46/57)Counting objects: 82% (47/57)Counting objects: 84% (48/57)Counting objects:
+85% (49/57)Counting objects: 87% (50/57)Counting objects: 89% (51/57)Counting objects: 91% (52/57)Counting objects: 92% (53/57)Counting objects: 94% (54/57)Counting objects: 96% (55/57)Counting objects: 98% (56/57)Counting objects: 100% (57/57)Counting objects: 100% (57/57), done.
+Compressing objects: 4% (1/22)Compressing objects: 9% (2/22)Compressing objects: 13% (3/22)Compressing
+objects: 18% (4/22)Compressing objects: 22% (5/22)Compressing objects: 27% (6/22)Compressing objects: 31% (7/22)Compressing objects: 36% (8/22)Compressing objects: 40% (9/22)Compressing objects: 45% (10/22)Compressing objects: 50% (11/22)Compressing objects: 54% (12/22)Compressing objects: 59% (13/22)Compressing objects: 63% (14/22)Compressing objects: 68% (15/22)Compressing objects: 72% (16/22)Compressing objects: 77% (17/22)Compressing objects: 81% (18/22)Compressing objects: 86% (19/22)Compressing objects: 90% (20/22)Compressing objects: 95% (21/22)Compressing objects: 100% (22/22)Compressing objects: 100% (22/22), done.
+Total 44 (delta 28), reused 34 (delta 20), pack-reused 0 (from 0)
+transferring objects ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 0% -:--:--
+processing deltas ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:00
 
 There are 34 new news item(s):
 
  No. ID Title
 ────────────────────────────────────────────────────────────────────────────────
- 1 2024-01-14-ruyi-news RuyiSDK 支持展示新闻了
- 2 2024-01-15-new-board-images 新增板卡支持 (2024-01-15)
- 3 2024-01-29-new-board-images 新增板卡支持 (2024-01-29)
- 4 2024-01-29-ruyi-0.4 RuyiSDK 0.4 版本更新说明
- 5 2024-02-26-gnu-plct-rv64ilp32-elf RV64ILP32 裸机工具链与 profile
- 现已可用
- 6 2024-04-23-ruyi-0.9 RuyiSDK 0.9 版本更新说明
- 7 2024-05-14-ruyi-0.10 RuyiSDK 0.10 版本更新说明
- 8 2024-05-28-ruyi-0.11 RuyiSDK 0.11 版本更新说明
- 9 2024-06-11-ruyi-0.12 RuyiSDK 0.12 版本更新说明
- 10 2024-06-24-ruyi-0.13 RuyiSDK 0.13 版本更新说明
+ 1 2024-01-14-ruyi-news RuyiSDK now supports displaying news
+ 2 2024-01-15-new-board-images New board images available
+ (2024-01-15)
+ 3 2024-01-29-new-board-images New board images available
+ (2024-01-29)
+ 4 2024-01-29-ruyi-0.4 Release notes for RuyiSDK 0.4
+ 5 2024-02-26-gnu-plct-rv64ilp32-elf RV64ILP32 bare-metal toolchain &
+ profile now available
+ 6 2024-04-23-ruyi-0.9 Release notes for RuyiSDK 0.9
+ 7 2024-05-14-ruyi-0.10 Release notes for RuyiSDK 0.10
+ 8 2024-05-28-ruyi-0.11 Release notes for RuyiSDK 0.11
+ 9 2024-06-11-ruyi-0.12 Release notes for RuyiSDK 0.12
+ 10 2024-06-24-ruyi-0.13 Release notes for RuyiSDK 0.13
  11 2024-07-08-box64-wps-office-poc 尝鲜：使用 Box64 在 RISC-V
  系统上运行 WPS Office
- 12 2024-07-09-ruyi-0.14 RuyiSDK 0.14 版本更新说明
- 13 2024-07-23-ruyi-0.15 RuyiSDK 0.15 版本更新说明
- 14 2024-08-13-ruyi-0.16 RuyiSDK 0.16 版本更新说明
- 15 2024-09-03-ruyi-0.17 RuyiSDK 0.17 版本更新说明
- 16 2024-09-14-ruyi-0.18 RuyiSDK 0.18 版本更新说明
- 17 2024-09-30-ruyi-0.19 RuyiSDK 0.19 版本更新说明
- 18 2024-10-22-ruyi-0.20 RuyiSDK 0.20 版本更新说明
- 19 2024-11-05-ruyi-0.21 RuyiSDK 0.21 版本更新说明
- 20 2024-11-19-ruyi-0.22 RuyiSDK 0.22 版本更新说明
- 21 2024-12-03-ruyi-0.23 RuyiSDK 0.23 版本更新说明
- 22 2024-12-17-ruyi-0.24 RuyiSDK 0.24 版本更新说明
- 23 2024-12-31-ruyi-0.25 RuyiSDK 0.25 版本更新说明
- 24 2025-01-14-ruyi-0.26 RuyiSDK 0.26 版本更新说明
- 25 2025-02-11-ruyi-0.27 RuyiSDK 0.27 版本更新说明
- 26 2025-02-25-ruyi-0.28 RuyiSDK 0.28 版本更新说明
- 27 2025-03-11-ruyi-0.29 RuyiSDK 0.29 版本更新说明
- 28 2025-03-25-ruyi-0.30 RuyiSDK 0.30 版本更新说明
- 29 2025-04-08-ruyi-0.31 RuyiSDK 0.31 版本更新说明
- 30 2025-04-22-ruyi-0.32 RuyiSDK 0.32 版本更新说明
- 31 2025-05-13-ruyi-0.33 RuyiSDK 0.33 版本更新说明
- 32 2025-05-27-ruyi-0.34 RuyiSDK 0.34 版本更新说明
- 33 2025-06-10-ruyi-0.35 RuyiSDK 0.35 版本更新说明
- 34 2025-06-24-ruyi-0.36 RuyiSDK 0.36 版本更新说明
+ 12 2024-07-09-ruyi-0.14 Release notes for RuyiSDK 0.14
+ 13 2024-07-23-ruyi-0.15 Release notes for RuyiSDK 0.15
+ 14 2024-08-13-ruyi-0.16 Release notes for RuyiSDK 0.16
+ 15 2024-09-03-ruyi-0.17 Release notes for RuyiSDK 0.17
+ 16 2024-09-14-ruyi-0.18 Release notes for RuyiSDK 0.18
+ 17 2024-09-30-ruyi-0.19 Release notes for RuyiSDK 0.19
+ 18 2024-10-22-ruyi-0.20 Release notes for RuyiSDK 0.20
+ 19 2024-11-05-ruyi-0.21 Release notes for RuyiSDK 0.21
+ 20 2024-11-19-ruyi-0.22 Release notes for RuyiSDK 0.22
+ 21 2024-12-03-ruyi-0.23 Release notes for RuyiSDK 0.23
+ 22 2024-12-17-ruyi-0.24 Release notes for RuyiSDK 0.24
+ 23 2024-12-31-ruyi-0.25 Release notes for RuyiSDK 0.25
+ 24 2025-01-14-ruyi-0.26 Release notes for RuyiSDK 0.26
+ 25 2025-02-11-ruyi-0.27 Release notes for RuyiSDK 0.27
+ 26 2025-02-25-ruyi-0.28 Release notes for RuyiSDK 0.28
+ 27 2025-03-11-ruyi-0.29 Release notes for RuyiSDK 0.29
+ 28 2025-03-25-ruyi-0.30 Release notes for RuyiSDK 0.30
+ 29 2025-04-08-ruyi-0.31 Release notes for RuyiSDK 0.31
+ 30 2025-04-22-ruyi-0.32 Release notes for RuyiSDK 0.32
+ 31 2025-05-13-ruyi-0.33 Release notes for RuyiSDK 0.33
+ 32 2025-05-27-ruyi-0.34 Release notes for RuyiSDK 0.34
+ 33 2025-06-10-ruyi-0.35 Release notes for RuyiSDK 0.35
+ 34 2025-06-24-ruyi-0.36 Release notes for RuyiSDK 0.36
 
 You can read them with ruyi news read.
 [stderr]
- % Total % Received % Xferd Average Speed Time Time Time Current
- Dload Upload Total Spent Left Speed
-
- 0 0 0 0 0 0 0 0 --:--:-- --:--:-- --:--:-- 0
- 0 0 0 0 0 0 0 0 --:--:-- --:--:-- --:--:-- 0
-100 142 100 142 0 0 213 0 --:--:-- --:--:-- --:--:-- 213
-
- 26 24.0M 26 6479k 0 0 4878k 0 0:00:05 0:00:01 0:00:04 4878k
-100 24.0M 100 24.0M 0 0 14.1M 0 0:00:01 0:00:01 --:--:-- 47.7M
-warn: this ruyi installation has telemetry mode set to on, and will upload non-tracking usage information to RuyiSDK-managed servers every Wednesday
-info: the next upload will happen anytime ruyi is executed between 2025-07-09 08:00:00 +0800 and 2025-07-10 08:00:00 +0800
+warn: this ruyi installation has telemetry mode set to on, and will upload non-tracking usage information to RuyiSDK-managed servers every Thursday
+info: scope pm: usage information has already been uploaded today at 2025-07-03 16:28:30 +0800
+info: scope repo:ruyisdk: the next upload will happen today if not already
 info: in order to hide this banner:
 info: - opt out with ruyi telemetry optout
 info: - or give consent with ruyi telemetry consent
@@ -117,15 +127,16 @@ Ruyi CLI Initialization Status (based on `assert.exit_code`): Pass
 Install the PLCT GNU Toolchain package using Ruyi.
 
 ```bash
-~/ruyi install toolchain/gnu-plct
+ruyi install toolchain/gnu-plct
 ```
 
 **Command Output:**
 
 ```output {ref="install-toolchain"}
 [stderr]
-warn: this ruyi installation has telemetry mode set to on, and will upload non-tracking usage information to RuyiSDK-managed servers every Wednesday
-info: the next upload will happen anytime ruyi is executed between 2025-07-09 08:00:00 +0800 and 2025-07-10 08:00:00 +0800
+warn: this ruyi installation has telemetry mode set to on, and will upload non-tracking usage information to RuyiSDK-managed servers every Thursday
+info: scope pm: usage information has already been uploaded today at 2025-07-03 16:28:30 +0800
+info: scope repo:ruyisdk: the next upload will happen today if not already
 info: in order to hide this banner:
 info: - opt out with ruyi telemetry optout
 info: - or give consent with ruyi telemetry consent
@@ -141,15 +152,16 @@ Installation Status (based on `assert.exit_code`): Pass
 Create an isolated virtual environment for this test.
 
 ```bash
-~/ruyi venv -t toolchain/gnu-plct generic venv-gnu-plct
+ruyi venv -t toolchain/gnu-plct generic venv-gnu-plct
 ```
 
 **Command Output:**
 
 ```output {ref="create-venv"}
 [stderr]
-warn: this ruyi installation has telemetry mode set to on, and will upload non-tracking usage information to RuyiSDK-managed servers every Wednesday
-info: the next upload will happen anytime ruyi is executed between 2025-07-09 08:00:00 +0800 and 2025-07-10 08:00:00 +0800
+warn: this ruyi installation has telemetry mode set to on, and will upload non-tracking usage information to RuyiSDK-managed servers every Thursday
+info: scope pm: usage information has already been uploaded today at 2025-07-03 16:28:30 +0800
+info: scope repo:ruyisdk: the next upload will happen today if not already
 info: in order to hide this banner:
 info: - opt out with ruyi telemetry optout
 info: - or give consent with ruyi telemetry consent
@@ -256,14 +268,14 @@ echo "Environment activated. Current PATH: $PATH"
 
 ```output {ref="activate-venv"}
 [stdout]
-Environment activated. Current PATH: /home/ezra/venv-gnu-plct/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin
+Environment activated. Current PATH: /home/ezra/venv-gnu-plct/bin:/usr/local/bin:/usr/bin:/bin:/usr/games
 ```
 
 **Command Output (Activate Environment):**
 
 ```output {ref="activate-venv"}
 [stdout]
-Environment activated. Current PATH: /home/ezra/venv-gnu-plct/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin
+Environment activated. Current PATH: /home/ezra/venv-gnu-plct/bin:/usr/local/bin:/usr/bin:/bin:/usr/games
 ```
 
 Environment Activation Status (based on `assert.exit_code` and `assert.stdout_contains`): Success
@@ -334,6 +346,9 @@ file hello_plct
 ```output {ref="compile-hello"}
 [stdout]
 hello_plct: ELF 64-bit LSB executable, UCB RISC-V, RVC, double-float ABI, version 1 (SYSV), dynamically linked, interpreter /lib/ld-linux-riscv64-lp64d.so.1, BuildID[sha1]=d0a47dcba1edcf817d618baa447ec0ab1989fdf7, for GNU/Linux 4.15.0, with debug_info, not stripped
+[stderr]
+bash: line 1: export: `-mabi=lp64d link
+file': not a valid identifier
 ```
 
 **Analysis:**
@@ -369,15 +384,16 @@ Compile and run CoreMark using default optimization options (`-O2 -lrt`).
 ```bash
 mkdir -p /tmp/coremark_default
 cd /tmp/coremark_default
-~/ruyi extract coremark
+ruyi extract coremark
 ```
 
 **Command Output (Extract CoreMark - Default):**
 
 ```output {ref="extract-coremark-default"}
 [stderr]
-warn: this ruyi installation has telemetry mode set to on, and will upload non-tracking usage information to RuyiSDK-managed servers every Wednesday
-info: the next upload will happen anytime ruyi is executed between 2025-07-09 08:00:00 +0800 and 2025-07-10 08:00:00 +0800
+warn: this ruyi installation has telemetry mode set to on, and will upload non-tracking usage information to RuyiSDK-managed servers every Thursday
+info: scope pm: usage information has already been uploaded today at 2025-07-03 16:28:30 +0800
+info: scope repo:ruyisdk: the next upload will happen today if not already
 info: in order to hide this banner:
 info: - opt out with ruyi telemetry optout
 info: - or give consent with ruyi telemetry consent
@@ -419,8 +435,8 @@ riscv64-plct-linux-gnu-gcc -O2 -Ilinux64 -I. -DFLAGS_STR=\""-O2 -lrt"\" -DITERAT
 Link performed along with compile
 coremark.exe: ELF 64-bit LSB executable, UCB RISC-V, RVC, double-float ABI, version 1 (SYSV), dynamically linked, interpreter /lib/ld-linux-riscv64-lp64d.so.1, BuildID[sha1]=865e58d260b2b3190200b6f5d1e22ca967733977, for GNU/Linux 4.15.0, with debug_info, not stripped
 [stderr]
-bash: 第 1 行：export: "-mabi=lp64d link
-file": 不是有效的标识符
+bash: line 1: export: `-mabi=lp64d link
+file': not a valid identifier
 ```
 
 CoreMark (Default Opt.) compilation status (based on `assert.exit_code` and `assert.stdout_contains`): ✅ PASS.
@@ -438,9 +454,9 @@ cd /tmp/coremark_default
 [stdout]
 2K performance run parameters for coremark.
 CoreMark Size : 666
-Total ticks : 18979
-Total time (secs): 18.979000
-Iterations/Sec : 5795.879656
+Total ticks : 13177
+Total time (secs): 13.177000
+Iterations/Sec : 8347.878880
 Iterations : 110000
 Compiler version : GCC16.0.0 20250512 (experimental)
 Compiler flags : -O2 -lrt
@@ -452,33 +468,34 @@ seedcrc : 0xe9f5
 [0]crcstate : 0x8e3a
 [0]crcfinal : 0x33ff
 Correct operation validated. See readme.txt for run and reporting rules.
-CoreMark 1.0 : 5795.879656 / GCC16.0.0 20250512 (experimental) -O2 -lrt / Heap
+CoreMark 1.0 : 8347.878880 / GCC16.0.0 20250512 (experimental) -O2 -lrt / Heap
 ```
 
 **Results (Default Optimizations):**
 CoreMark run status (based on `assert.stdout_contains="CoreMark 1.0"`): Pass
-CoreMark Score (Iterations/Sec): `5795.879656`
+CoreMark Score (Iterations/Sec): `8347.878880`
 Reported Compiler Version: `GCC16.0.0` (Does not match -v or not extracted)
 Reported Compiler Flags: `-O2 -lrt`
 
 ### 4. CoreMark Benchmark (Vector Extension Optimizations)
 
-Compile and run CoreMark using `-march=rv64gcv_zvl256b -mabi=lp64d`.
+Compile and run CoreMark using `-march=rv64gc_xtheadvector_xtheadba_xtheadbb_xtheadbs -mabi=lp64d`.
 
 **Command (Extract CoreMark - Vector):**
 
 ```bash
 mkdir -p /tmp/coremark_vector
 cd /tmp/coremark_vector
-~/ruyi extract coremark
+ruyi extract coremark
 ```
 
 **Command Output (Extract CoreMark - Vector):**
 
 ```output {ref="extract-coremark-vector"}
 [stderr]
-warn: this ruyi installation has telemetry mode set to on, and will upload non-tracking usage information to RuyiSDK-managed servers every Wednesday
-info: the next upload will happen anytime ruyi is executed between 2025-07-09 08:00:00 +0800 and 2025-07-10 08:00:00 +0800
+warn: this ruyi installation has telemetry mode set to on, and will upload non-tracking usage information to RuyiSDK-managed servers every Thursday
+info: scope pm: usage information has already been uploaded today at 2025-07-03 16:28:30 +0800
+info: scope repo:ruyisdk: the next upload will happen today if not already
 info: in order to hide this banner:
 info: - opt out with ruyi telemetry optout
 info: - or give consent with ruyi telemetry consent
@@ -508,7 +525,7 @@ Makefile (Vector) configuration status (based on `assert.exit_code`): Pass.
 ```bash
 . ~/venv-gnu-plct/bin/ruyi-activate
 cd /tmp/coremark_vector
-make PORT_DIR=linux64 XCFLAGS="-march=rv64gcv_zvl256b -mabi=lp64d" link
+make PORT_DIR=linux64 XCFLAGS="-march=rv64gc_xtheadvector_xtheadba_xtheadbb_xtheadbs -mabi=lp64d" link
 file coremark.exe
 ```
 
@@ -516,9 +533,9 @@ file coremark.exe
 
 ```output {ref="build-coremark-vector"}
 [stdout]
-riscv64-plct-linux-gnu-gcc -O2 -Ilinux64 -I. -DFLAGS_STR=\""-O2 -march=rv64gcv_zvl256b -mabi=lp64d -lrt"\" -DITERATIONS=0 -march=rv64gcv_zvl256b -mabi=lp64d core_list_join.c core_main.c core_matrix.c core_state.c core_util.c linux64/core_portme.c -o ./coremark.exe -lrt
+riscv64-plct-linux-gnu-gcc -O2 -Ilinux64 -I. -DFLAGS_STR=\""-O2 -march=rv64gc_xtheadvector_xtheadba_xtheadbb_xtheadbs -mabi=lp64d -lrt"\" -DITERATIONS=0 -march=rv64gc_xtheadvector_xtheadba_xtheadbb_xtheadbs -mabi=lp64d core_list_join.c core_main.c core_matrix.c core_state.c core_util.c linux64/core_portme.c -o ./coremark.exe -lrt
 Link performed along with compile
-coremark.exe: ELF 64-bit LSB executable, UCB RISC-V, RVC, double-float ABI, version 1 (SYSV), dynamically linked, interpreter /lib/ld-linux-riscv64-lp64d.so.1, BuildID[sha1]=3c68395bf758c26aefe0070688e403ceb3bee4ea, for GNU/Linux 4.15.0, with debug_info, not stripped
+coremark.exe: ELF 64-bit LSB executable, UCB RISC-V, RVC, double-float ABI, version 1 (SYSV), dynamically linked, interpreter /lib/ld-linux-riscv64-lp64d.so.1, BuildID[sha1]=5091706b6b6b99b8df9c52452e0a40bf7baa26cb, for GNU/Linux 4.15.0, with debug_info, not stripped
 ```
 
 CoreMark (Vector Opt.) compilation status (based on `assert.exit_code` and `assert.stdout_contains`): ✅ PASS.
@@ -536,12 +553,12 @@ cd /tmp/coremark_vector
 [stdout]
 2K performance run parameters for coremark.
 CoreMark Size : 666
-Total ticks : 19067
-Total time (secs): 19.067000
-Iterations/Sec : 5769.129910
+Total ticks : 12777
+Total time (secs): 12.777000
+Iterations/Sec : 8609.219692
 Iterations : 110000
 Compiler version : GCC16.0.0 20250512 (experimental)
-Compiler flags : -O2 -march=rv64gcv_zvl256b -mabi=lp64d -lrt
+Compiler flags : -O2 -march=rv64gc_xtheadvector_xtheadba_xtheadbb_xtheadbs -mabi=lp64d -lrt
 Memory location : Please put data memory location here
  (e.g. code in flash, data on heap etc)
 seedcrc : 0xe9f5
@@ -550,14 +567,14 @@ seedcrc : 0xe9f5
 [0]crcstate : 0x8e3a
 [0]crcfinal : 0x33ff
 Correct operation validated. See readme.txt for run and reporting rules.
-CoreMark 1.0 : 5769.129910 / GCC16.0.0 20250512 (experimental) -O2 -march=rv64gcv_zvl256b -mabi=lp64d -lrt / Heap
+CoreMark 1.0 : 8609.219692 / GCC16.0.0 20250512 (experimental) -O2 -march=rv64gc_xtheadvector_xtheadba_xtheadbb_xtheadbs -mabi=lp64d -lrt / Heap
 ```
 
 **Results (Vector Optimizations):**
 CoreMark run status (based on `assert.stdout_contains="CoreMark 1.0"`): Pass
-CoreMark Score (Iterations/Sec): `5769.129910`
+CoreMark Score (Iterations/Sec): `8609.219692`
 Reported Compiler Version: `GCC16.0.0`
-Reported Compiler Flags: `-O2 -march=rv64gcv_zvl256b -mabi=lp64d -lrt`
+Reported Compiler Flags: `-O2 -march=rv64gc_xtheadvector_xtheadba_xtheadbb_xtheadbs -mabi=lp64d -lrt`
 
 ## Performance Comparison
 
@@ -565,16 +582,16 @@ Higher CoreMark scores (Iterations/Sec) indicate better performance.
 
 | Metric | Default Optimizations | Vector Extension Optimizations|
 |-------------------------------|-----------------------------------------------------|-----------------------------------------------------------------------|
-| **Iterations/Sec** | `5795.879656` | `5769.129910` |
-| **Total ticks** | `18979` | `19067` |
-| **Total time (secs)** | `18.979000` | `19.067000` |
+| **Iterations/Sec** | `8347.878880` | `8609.219692` |
+| **Total ticks** | `13177` | `12777` |
+| **Total time (secs)** | `13.177000` | `12.777000` |
 | **Iterations** | `110000` | `110000` |
 | **Compiler (Reported)** | `GCC16.0.0` | `GCC16.0.0` |
-| **Compiler Flags (Reported)** | `-O2 -lrt` | `-O2 -march=rv64gcv_zvl256b -mabi=lp64d -lrt` |
+| **Compiler Flags (Reported)** | `-O2 -lrt` | `-O2 -march=rv64gc_xtheadvector_xtheadba_xtheadbb_xtheadbs -mabi=lp64d -lrt` |
 | **Compiler (from -v)** | `16.0.0` | `16.0.0` |
 
 **Performance Analysis:**
-In this test, CoreMark on the SpacemiT K1/M1 (X60) SoC using GCC `16.0.0` achieved scores of `5795.879656` (Default Optimizations) and `5769.129910` (Vector Extension Optimizations).
+In this test, CoreMark on the TH1520 SoC using GCC `16.0.0` achieved scores of `8347.878880` (Default Optimizations) and `8609.219692` (Vector Extension Optimizations).
 Further analysis of these scores can reveal the specific impact of vector extensions for the CoreMark workload with this compiler version.
 
 ## Test Summary
@@ -583,10 +600,10 @@ Further analysis of these scores can reveal the specific impact of vector extens
 |---------------------------------------------------|-------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | Ruyi CLI Initialization (`init-ruyi`) | Ruyi CLI successfully prepared | ✅ PASS |
 | Toolchain Installation (`install-toolchain`) | Successfully installed | ✅ PASS |
-| Compiler Version Check (`check-version`) | GCC , riscv64-unknown-linux-gnu, rv64gc, lp64d | ✅ PASS (Version: `16.0.0`) |
+| Compiler Version Check (`check-version`) | GCC 14.2.0, riscv64-unknown-linux-gnu, rv64gc, lp64d | ✅ PASS (Version: `16.0.0`) |
 | Hello World Compilation (`compile-hello`) | Successfully compiled ELF 64-bit | ✅ PASS |
 | Hello World Execution (`run-hello`) | Outputs "Hello, world!" | ✅ PASS (Output: `Hello, world!`) |
 | CoreMark (Default) Compilation (`build-coremark-default`) | Successfully compiled | ✅ PASS |
-| CoreMark (Default) Execution (`run-coremark-default`) | Successfully runs, "CoreMark 1.0" flag present | ✅ PASS (Score: `5795.879656`) |
+| CoreMark (Default) Execution (`run-coremark-default`) | Successfully runs, "CoreMark 1.0" flag present | ✅ PASS (Score: `8347.878880`) |
 | CoreMark (Vector) Compilation (`build-coremark-vector`) | Successfully compiled | ✅ PASS |
-| CoreMark (Vector) Execution (`run-coremark-vector`) | Successfully runs, "CoreMark 1.0" flag present | ✅ PASS (Score: `5769.129910`) |
+| CoreMark (Vector) Execution (`run-coremark-vector`) | Successfully runs, "CoreMark 1.0" flag present | ✅ PASS (Score: `8609.219692`) |
