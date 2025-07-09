@@ -1,18 +1,23 @@
 # ruyisdk-gnu-tests
 
-在各开发板上验证 ruyisdk 的 gnu-plct、gnu-upstream 工具链的安装和可用性。
+在各开发板上验证 RuyiSDK 的 `gnu-plct`、`gnu-upstream` 工具链的安装和可用性。
 
-主要编译验证项目包括但不限于：
+主要验证项目包括但不限于：
 
+- 使用 `ruyi` 包管理器安装指定编译器并创建虚拟环境
 - Hello World
 - CoreMark
 
 ## 测试情况
 
-| GCC 编译器/开发板（SoC） | D1 (c906fdv) | SpacemiT K1/M1 (X60) | TH1520 (c910) | JH7110 (U74) | K230 (c908) | SG2042 (c920v2) | CV1800B (c906fdv) | SG2000 (c906fdv) |
+| GCC 编译器/开发板（SoC） | D1 (c906fdv) | SpacemiT K1/M1 (X60) | TH1520 (c910) | JH7110 (U74) | K230 (c908) | SG2042 (c920v1) | CV1800B (c906fdv) | SG2000 (c906fdv) |
 |--------------------------|--------------|----------------------|---------------|--------------|-------------|-----------------|-------------------|------------------|
 | gnu-upstream             | ✅ PASS      | ✅ PASS              | ✅ PASS       | ✅ PASS      | ✅ PASS     | ✅ PASS         | ✅ PASS           | ✅ PASS          |
-| gnu-plct                 | ✅ PASS      | ✅ PASS              | ✅ PASS       | ✅ PASS      | ✅ PASS     | ✅ PASS         | ✅ PASS           | ❎ FAIL          |
+| gnu-plct                 | ✅ PASS      | ✅ PASS              | ✅ PASS       | ✅ PASS      | ✅ PASS     | ✅ PASS         | ✅ PASS           | ❎ FAIL¹          |
+
+¹：非 ruyi 原因导致，上游 curl bug 导致测试失败。
+
+详情见：curl[#17545](https://github.com/curl/curl/issues/17545)
 
 ## License
 
@@ -22,7 +27,7 @@
 
 此仓库的测试报告由以下成员完成：
 
-- D1 (c906fdv): @panglars
+- D1 (c906fdv): @panglars, @KevinMX
 - SpacemiT K1/M1 (X60): @255doesnotexist
 - TH1520 (c910): @wychlw
 - JH7110 (U74): @saicogn
