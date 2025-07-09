@@ -6,8 +6,8 @@
 - RuyiSDK on Allwinner D1 boards
     - AWOL Nezha in this test report, should be the same on LicheeRV Dock
 - OS: Ubuntu 24.04.2 LTS
-- ruyi package manager version: ruyi 0.35.0
-    - 0.36.0 and 0.37.0 failed to create venv so not using it
+- ruyi package manager version: ruyi 0.36.0
+    - 0.37.0 failed to create venv so not using it
 - Testing date: July 9, 2025
 
 ### Hardware Information
@@ -46,7 +46,7 @@ Failed to create venv.
 ruyi venv -t toolchain/gnu-plct generic venv-gnu-plct
 ```
 
-**Result on 0.35.0**
+**Result on 0.36.0**
 ```bash
 ubuntu@ubuntu:~$ time ruyi venv -t toolchain/gnu-plct generic venv-gnu-plct
 info: Creating a Ruyi virtual environment at venv-gnu-plct...
