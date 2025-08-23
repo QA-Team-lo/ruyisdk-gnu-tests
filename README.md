@@ -13,11 +13,7 @@
 | GCC 编译器/开发板（SoC） | D1 (c906fdv) | SpacemiT K1/M1 (X60) | TH1520 (c910) | JH7110 (U74) | K230 (c908) | SG2042 (c920v1) | CV1800B (c906fdv) | SG2000 (c906fdv) |
 |--------------------------|--------------|----------------------|---------------|--------------|-------------|-----------------|-------------------|------------------|
 | gnu-upstream             | ✅ PASS      | ✅ PASS              | ✅ PASS       | ✅ PASS      | ✅ PASS     | ✅ PASS         | ✅ PASS           | ✅ PASS          |
-| gnu-plct                 | ✅ PASS      | ✅ PASS              | ✅ PASS       | ✅ PASS      | ✅ PASS     | ✅ PASS         | ✅ PASS           | ❎ FAIL¹          |
-
-¹：非 ruyi 原因导致，上游 curl bug 导致测试失败。
-
-详情见：curl[#17545](https://github.com/curl/curl/issues/17545)
+| gnu-plct                 | ✅ PASS      | ✅ PASS              | ✅ PASS       | ✅ PASS      | ✅ PASS     | ✅ PASS         | ✅ PASS           | ✅ PASS          |
 
 ## License
 

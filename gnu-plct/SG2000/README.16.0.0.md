@@ -269,7 +269,7 @@ coremark.exe: ELF 64-bit LSB executable, UCB RISC-V, RVC, double-float ABI, vers
 
 **System and Hardware Information:**
 - OS: Arch Linux x86_64
-- Kernel: Linux 6.15.3-arch1-1
+- Kernel: Linux 6.16.1-arch1-1
 
 **Commands and Results:**
 
@@ -282,43 +282,108 @@ ruyi install toolchain/gnu-plct
 
 **Result:**
 ```bash
-[mitchell@nekoarch tmp]$ ruyi install toolchain/gnu-plct
+m@n:~/Documents/tmp$ ruyi install toolchain/gnu-plct
 warn: this ruyi installation has telemetry mode set to on, and will upload non-tracking usage information to RuyiSDK-managed servers every Tuesday
-info: the next upload will happen anytime ruyi is executed between 2025-07-01 08:00:00 +0800 and 2025-07-02 08:00:00 +0800
+info: the next upload will happen anytime ruyi is executed between 2025-08-26 08:00:00 +0800 and 2025-08-27 08:00:00 +0800
 info: in order to hide this banner:
 info: - opt out with ruyi telemetry optout
 info: - or give consent with ruyi telemetry consent
 info: downloading https://mirror.iscas.ac.cn/ruyisdk/dist/RuyiSDK-20250615-PLCT-Sources-riscv64-plct-linux-gnu.tar.xz to /home/mitchell/.cache/ruyi/distfiles/RuyiSDK-20250615-PLCT-Sources-riscv64-plct-linux-gnu.tar.xz
-curl: option --ftp-pasv: is unknown
-curl: try 'curl --help' for more information
-warn: failed to fetch distfile: command 'curl -L --connect-timeout 60 --ftp-pasv -o /home/mitchell/.cache/ruyi/distfiles/RuyiSDK-20250615-PLCT-Sources-riscv64-plct-linux-gnu.tar.xz https://mirror.iscas.ac.cn/ruyisdk/dist/RuyiSDK-20250615-PLCT-Sources-riscv64-plct-linux-gnu.tar.xz' returned 2
-info: retrying download (2 of 3 times)
-curl: option --ftp-pasv: is unknown
-curl: try 'curl --help' for more information
-warn: failed to fetch distfile: command 'curl -L --connect-timeout 60 --ftp-pasv -o /home/mitchell/.cache/ruyi/distfiles/RuyiSDK-20250615-PLCT-Sources-riscv64-plct-linux-gnu.tar.xz https://mirror.iscas.ac.cn/ruyisdk/dist/RuyiSDK-20250615-PLCT-Sources-riscv64-plct-linux-gnu.tar.xz' returned 2
-info: retrying download (3 of 3 times)
-curl: option --ftp-pasv: is unknown
-curl: try 'curl --help' for more information
-warn: failed to fetch distfile: command 'curl -L --connect-timeout 60 --ftp-pasv -o /home/mitchell/.cache/ruyi/distfiles/RuyiSDK-20250615-PLCT-Sources-riscv64-plct-linux-gnu.tar.xz https://mirror.iscas.ac.cn/ruyisdk/dist/RuyiSDK-20250615-PLCT-Sources-riscv64-plct-linux-gnu.tar.xz' returned 2
-fatal error: failed to fetch '/home/mitchell/.cache/ruyi/distfiles/RuyiSDK-20250615-PLCT-Sources-riscv64-plct-linux-gnu.tar.xz': all source URLs have failed
-
-Downloads can fail for a multitude of reasons, most of which should not and
-cannot be handled by Ruyi. For your convenience though, please check if any
-of the following common failure modes apply to you, and take actions
-accordingly if one of them turns out to be the case:
-
-* Basic connectivity problems
-    - is the gateway reachable?
-    - is common websites reachable?
-    - is there any DNS pollution?
-* Organizational and/or ISP restrictions
-    - is there a firewall preventing Ruyi traffic?
-    - is your ISP blocking access to the source website?
-* Volatile upstream
-    - is the recorded link dead? (Please raise a Ruyi issue for a fix!)
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100   142  100   142    0     0   1038      0 --:--:-- --:--:-- --:--:--  1044
+100  363M  100  363M    0     0  15.6M      0  0:00:23  0:00:23 --:--:-- 17.8M
+info: extracting RuyiSDK-20250615-PLCT-Sources-riscv64-plct-linux-gnu.tar.xz for package gnu-plct-0.20250615.0
+info: package gnu-plct-0.20250615.0 installed to /home/mitchell/.local/share/ruyi/binaries/x86_64/gnu-plct-0.20250615.0
 ```
 
-**Test Failed**
+2. Create virtual environment
+
+**Command:**
+```bash
+ruyi venv -t toolchain/gnu-plct generic venv-gnu-plct
+```
+
+**Result:**
+```bash
+m@n:~/Documents/tmp$ ruyi venv -t toolchain/gnu-plct generic venv-gnu-plct
+warn: this ruyi installation has telemetry mode set to on, and will upload non-tracking usage information to RuyiSDK-managed servers every Tuesday
+info: the next upload will happen anytime ruyi is executed between 2025-08-26 08:00:00 +0800 and 2025-08-27 08:00:00 +0800
+info: in order to hide this banner:
+info: - opt out with ruyi telemetry optout
+info: - or give consent with ruyi telemetry consent
+info: Creating a Ruyi virtual environment at venv-gnu-plct...
+info: The virtual environment is now created.
+
+You may activate it by sourcing the appropriate activation script in the
+bin directory, and deactivate by invoking `ruyi-deactivate`.
+
+A fresh sysroot/prefix is also provisioned in the virtual environment.
+It is available at the following path:
+
+    /home/mitchell/Documents/tmp/venv-gnu-plct/sysroot
+
+The virtual environment also comes with ready-made CMake toolchain file
+and Meson cross file. Check the virtual environment root for those;
+comments in the files contain usage instructions.
+```
+
+
+3. Activate environment
+
+**Command:**
+```bash
+. ./venv-gnu-plct/bin/ruyi-activate
+```
+
+**Result:**
+```bash
+m@n:~/Documents/tmp$ . ./venv-gnu-plct/bin/ruyi-activate
+«Ruyi venv-gnu-plct» m@n:~/Documents/tmp$ riscv64-plct-linux-gnu-gcc -v
+Using built-in specs.
+COLLECT_GCC=/home/mitchell/.local/share/ruyi/binaries/x86_64/gnu-plct-0.20250615.0/bin/riscv64-plct-linux-gnu-gcc
+COLLECT_LTO_WRAPPER=/home/mitchell/.local/share/ruyi/binaries/x86_64/gnu-plct-0.20250615.0/bin/../libexec/gcc/riscv64-plct-linux-gnu/16.0.0/lto-wrapper
+Target: riscv64-plct-linux-gnu
+Configured with: /work/riscv64-plct-linux-gnu/src/gcc/configure --build=x86_64-build_pc-linux-gnu --host=x86_64-build_pc-linux-gnu --target=riscv64-plct-linux-gnu --prefix=/opt/ruyi/riscv64-plct-linux-gnu --exec_prefix=/opt/ruyi/riscv64-plct-linux-gnu --with-sysroot=/opt/ruyi/riscv64-plct-linux-gnu/riscv64-plct-linux-gnu/sysroot --enable-languages=c,c++,fortran,objc,obj-c++ --with-arch=rv64gc --with-abi=lp64d --with-pkgversion='RuyiSDK 20250615 PLCT-Sources' --with-bugurl=https://github.com/ruyisdk/ruyisdk/issues --enable-__cxa_atexit --disable-libmudflap --enable-libgomp --disable-libquadmath --disable-libquadmath-support --disable-libmpx --with-gmp=/work/riscv64-plct-linux-gnu/buildtools --with-mpfr=/work/riscv64-plct-linux-gnu/buildtools --with-mpc=/work/riscv64-plct-linux-gnu/buildtools --with-isl=/work/riscv64-plct-linux-gnu/buildtools --enable-lto --enable-threads=posix --enable-target-optspace --enable-linker-build-id --with-linker-hash-style=gnu --enable-plugin --disable-nls --enable-multiarch --with-local-prefix=/opt/ruyi/riscv64-plct-linux-gnu/riscv64-plct-linux-gnu/sysroot --enable-long-long
+Thread model: posix
+Supported LTO compression algorithms: zlib zstd
+gcc version 16.0.0 20250512 (experimental) (RuyiSDK 20250615 PLCT-Sources)
+```
+
+
+4. Extract and build CoreMark with Ruyi
+
+**Command:**
+```bash
+ruyi extract coremark
+sed -i 's/\bgcc\b/riscv64-plct-linux-gnu-gcc/g' linux64/core_portme.mak
+make PORT_DIR=linux64 link
+```
+
+**Result:**
+```bash
+«Ruyi venv-gnu-plct» m@n:~/.../tmp/cm$ ruyi extract coremark
+warn: this ruyi installation has telemetry mode set to on, and will upload non-tracking usage information to RuyiSDK-managed servers every Tuesday
+info: the next upload will happen anytime ruyi is executed between 2025-08-26 08:00:00 +0800 and 2025-08-27 08:00:00 +0800
+info: in order to hide this banner:
+info: - opt out with ruyi telemetry optout
+info: - or give consent with ruyi telemetry consent
+info: extracting coremark-1.01.tar.gz for package coremark-1.0.1
+info: package coremark-1.0.1 extracted to current working directory
+«Ruyi venv-gnu-plct» m@n:~/.../tmp/cm$ sed -i 's/\bgcc\b/riscv64-plct-linux-gnu-gcc/g' linux64/core_portme.mak
+«Ruyi venv-gnu-plct» m@n:~/.../tmp/cm$ make PORT_DIR=linux64 link
+riscv64-plct-linux-gnu-gcc -O2 -Ilinux64 -I. -DFLAGS_STR=\""-O2   -lrt"\" -DITERATIONS=0  core_list_join.c core_main.c core_matrix.c core_state.c core_util.c linux64/core_portme.c -o ./coremark.exe -lrt
+Link performed along with compile
+«Ruyi venv-gnu-plct» m@n:~/.../tmp/cm$ file coremark.exe
+coremark.exe: ELF 64-bit LSB executable, UCB RISC-V, RVC, double-float ABI, version 1 (SYSV), dynamically linked, interpreter /lib/ld-linux-riscv64-lp64d.so.1, BuildID[sha1]=d255b804c320c186afb788e9eb66e76a3a1af723, for GNU/Linux 4.15.0, with debug_info, not stripped
+```
+
+5. Send file to DuoS
+
+**Command:**
+```bash
+scp coremark.exe debian@10.42.0.1:
+```
 
 #### CoreMark score
 
@@ -366,7 +431,6 @@ The following table summarizes the test results for GNU Toolchain on Sophgo SG20
 | Test Case                      | Expected Result                               | Actual Result                                                             | Status  |
 |--------------------------------|-----------------------------------------------|---------------------------------------------------------------------------|---------|
 | **Toolchain Installation**     | Successfully installed toolchain              | Installed to `~/.local/share/ruyi/binaries/riscv64/gnu-plct-0.20250401.0` | ✅ PASS |
-| **Cross Compile Installation** | Successfully installed toolchain on ArchLinux | Installation Failed                                                       | ❎ FAIL |
 | **Compiler Verification**      | GCC 16.0.0 for RISC-V architecture            | GCC 16.0.0 with rv64gc architecture, lp64d ABI                            | ✅ PASS |
 | **Hello World Test**           | Successful compilation and execution          | Successfully compiled and executed                                        | ✅ PASS |
 | **CoreMark Benchmark**         | Successfully compile and run benchmark        | Successfully compiled and completed benchmark with score of 2743.672406   | ✅ PASS |
